@@ -1,0 +1,8 @@
+<div class="spinner-container" *ngIf="isNavigating$ | async; else loading;">
+    <mat-spinner></mat-spinner>
+</div>
+<ng-template #loading>
+    <div class="spinner-container" *ngIf="isLoading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

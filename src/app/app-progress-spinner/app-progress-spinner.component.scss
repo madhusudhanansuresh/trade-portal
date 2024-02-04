@@ -1,0 +1,14 @@
+.spinner-container {
+    position: fixed;
+    top:0;
+    bottom:0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    z-index: 1050;
+
+    mat-spinner {
+        margin: 0 auto;
+        top: calc(calc(calc(100vh - 7rem) /2) - 50px);
+    }
+}
