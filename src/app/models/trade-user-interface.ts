@@ -1,9 +1,6 @@
 export interface MarketStatisticsResponse {
-    value: Value;
-    formatters: any[];
-    contentTypes: any[];
-    declaredType: any;
-    statusCode: number;
+  listMarketStatistics: MarketStatistics[];
+  success: boolean;
   }
   
   export interface Value {

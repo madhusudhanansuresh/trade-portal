@@ -32,7 +32,7 @@ export class TopStocksTodayComponent implements OnInit {
     this.store.dispatch(fromRoot.searchStockData({ payload: {} }));
 
     this.marketStatistics$ = this.store.select(fromRoot.getStockData).pipe(
-      map(data => data?.value?.listMarketStatistics || [])
+      map(data => data?.listMarketStatistics || [])
     );
 
     // Subscribe to marketStatistics$ and update MatTableDataSource
