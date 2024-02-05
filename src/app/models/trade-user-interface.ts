@@ -1,36 +1,29 @@
 export interface MarketStatisticsResponse {
-    Value: Value;
-    Formatters: any[];
-    ContentTypes: any[];
-    DeclaredType: any;
-    StatusCode: number;
+    value: Value;
+    formatters: any[];
+    contentTypes: any[];
+    declaredType: any;
+    statusCode: number;
   }
   
   export interface Value {
-    ListMarketStatistics: MarketStatistics[];
+    listMarketStatistics: MarketStatistics[];
   }
   
   export interface MarketStatistics {
-    Ticker: string;
-    ATR: number;
-    FiveMin: TimeframeStatistic;
-    TenMin: TimeframeStatistic;
-    FifteenMin: TimeframeStatistic;
-    TwentyMin: TimeframeStatistic;
-    TwentyFiveMin: TimeframeStatistic;
-    ThirtyMin: TimeframeStatistic;
-    FortyFiveMin: TimeframeStatistic;
-    OneHour: TimeframeStatistic;
-    TwoHour: TimeframeStatistic;
-    ThreeHour: TimeframeStatistic | null;
-    FourHour: TimeframeStatistic | null;
-    FiveHour: TimeframeStatistic | null;
-    SixHour: TimeframeStatistic | null;
-    SevenHour: TimeframeStatistic | null;
+    ticker: string;
+    atr: number;
+    price: number;
+    fifteenMin: TimeframeStatistic;
+    thirtyMin: TimeframeStatistic;
+    oneHour: TimeframeStatistic;
+    twoHour: TimeframeStatistic;
+    fourHour: TimeframeStatistic | null;
+    
   }
   
   export interface TimeframeStatistic {
-    Rvol: number;
-    RsRw: number | null;
+    rvol: number;
+    rsrw: number | null;
   }
   
