@@ -11,9 +11,12 @@ import { effects, reducers, tradeMetaReducers, tradeReducers } from './store';
 import { httpInterceptorProviders } from './http-interceptors';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TopStocksTodayComponent } from './top-stocks-today/top-stocks-today.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { AuthInterceptorService } from './http-interceptors/AuthInterceptorService';
 import { environment } from '../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,8 +26,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MatProgressSpinnerModule,
+    MatTableModule,
+    MatSortModule,
     HttpClientModule,
     EffectsModule.forRoot(effects),
     StoreModule.forRoot(reducers),
