@@ -14,13 +14,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TopStocksTodayComponent implements OnInit {
   dataSource: MatTableDataSource<MarketStatistics>;
   displayedColumns: string[] = [
-    'ticker', 'atr', 
-    'fiveMinRvol', 'fiveMinRsRw', 
-    'tenMinRvol', 'tenMinRsRw', 
+    'ticker', 'atr', 'price',
     'fifteenMinRvol', 'fifteenMinRsRw', 
-    'twentyMinRvol', 'twentyMinRsRw', 
     'thirtyMinRvol', 'thirtyMinRsRw',
-    'fortyFiveMinRvol', 'fortyFiveMinRsRw',
     'oneHourRvol', 'oneHourRsRw',
     'twoHourRvol', 'twoHourRsRw',
     'fourHourRvol', 'fourHourRsRw'
@@ -36,7 +32,7 @@ export class TopStocksTodayComponent implements OnInit {
     this.store.dispatch(fromRoot.searchStockData({ payload: {} }));
 
     this.marketStatistics$ = this.store.select(fromRoot.getStockData).pipe(
-      map(data => data?.Value?.ListMarketStatistics || [])
+      map(data => data?.value?.listMarketStatistics || [])
     );
 
     // Subscribe to marketStatistics$ and update MatTableDataSource
