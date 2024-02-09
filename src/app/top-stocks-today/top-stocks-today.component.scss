@@ -1,7 +1,4 @@
-table {
-    width: 50%;
-  }
-  
-  th.mat-sort-header-sorted {
-    color: black;
-  }
+.statistics-card .mat-table {
+  width: 100%;
+  min-width: 1000px; /* Adjust based on your requirements */
+}
