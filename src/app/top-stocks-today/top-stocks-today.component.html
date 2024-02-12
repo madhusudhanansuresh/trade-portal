@@ -12,22 +12,22 @@
         <td mat-cell *matCellDef="let statistic">{{ statistic.ticker }}</td>
       </ng-container>
 
-      <!-- ATR Column -->
-      <ng-container matColumnDef="atr">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ATR</th>
-        <td mat-cell *matCellDef="let statistic">{{ statistic.atr }}</td>
-      </ng-container>
-
-      <!-- Price Column -->
-      <ng-container matColumnDef="price">
+       <!-- Price Column -->
+       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
         <td mat-cell *matCellDef="let statistic">{{ statistic.price }}</td>
+      </ng-container>
+
+      <!-- ATR Column -->
+      <ng-container matColumnDef="atr">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="grey-header">ATR</th>
+        <td mat-cell *matCellDef="let statistic">{{ statistic.atr }}</td>
       </ng-container>
 
       <!-- FifteenMin Rvol Column -->
       <ng-container matColumnDef="fifteenMinRvol">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>15 Min Rvol</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.fifteenMin.rvol > 100, 'negative-value': statistic.fifteenMin.rvol < 100}">
           {{ statistic.fifteenMin.rvol }}
         </td>
       </ng-container>
@@ -35,7 +35,7 @@
       <!-- FifteenMin RsRw Column -->
       <ng-container matColumnDef="fifteenMinRsRw">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>15 Min RsRw</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.fifteenMin.rsrw > 0, 'negative-value': statistic.fifteenMin.rsrw < 0}">
           {{ statistic.fifteenMin.rsrw }}
         </td>
       </ng-container>
@@ -43,7 +43,7 @@
       <!-- ThirtyMin Rvol Column -->
       <ng-container matColumnDef="thirtyMinRvol">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>30 Min Rvol</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.thirtyMin.rvol > 100, 'negative-value': statistic.thirtyMin.rvol < 100}">
           {{ statistic.thirtyMin.rvol }}
         </td>
       </ng-container>
@@ -51,7 +51,7 @@
       <!-- ThirtyMin RsRw Column -->
       <ng-container matColumnDef="thirtyMinRsRw">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>30 Min RsRw</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.thirtyMin.rsrw > 0, 'negative-value': statistic.thirtyMin.rsrw < 0}">
           {{ statistic.thirtyMin.rsrw }}
         </td>
       </ng-container>
@@ -59,7 +59,7 @@
       <!-- OneHour Rvol Column -->
       <ng-container matColumnDef="oneHourRvol">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>1 Hour Rvol</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.oneHour.rvol > 100, 'negative-value': statistic.oneHour.rvol < 100}">
           {{ statistic.oneHour.rvol }}
         </td>
       </ng-container>
@@ -67,7 +67,7 @@
       <!-- OneHour RsRw Column -->
       <ng-container matColumnDef="oneHourRsRw">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>1 Hour RsRw</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.oneHour.rsrw > 0, 'negative-value': statistic.oneHour.rsrw < 0}">
           {{ statistic.oneHour.rsrw }}
         </td>
       </ng-container>
@@ -75,7 +75,7 @@
       <!-- TwoHour Rvol Column -->
       <ng-container matColumnDef="twoHourRvol">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>2 Hours Rvol</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.twoHour.rvol > 100, 'negative-value': statistic.twoHour.rvol < 100}">
           {{ statistic.twoHour.rvol }}
         </td>
       </ng-container>
@@ -83,7 +83,7 @@
       <!-- TwoHour RsRw Column -->
       <ng-container matColumnDef="twoHourRsRw">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>2 Hours RsRw</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.twoHour?.rsrw > 0, 'negative-value': statistic.twoHour.rsrw < 0}">
           {{ statistic.twoHour.rsrw }}
         </td>
       </ng-container>
@@ -91,7 +91,7 @@
       <!-- FourHour Rvol Column (nullable) -->
       <ng-container matColumnDef="fourHourRvol">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>4 Hours Rvol</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.fourHour.rvol > 100, 'negative-value': statistic.fourHour.rvol < 100}">
           {{ statistic.fourHour?.rvol }}
         </td>
       </ng-container>
@@ -99,16 +99,16 @@
       <!-- FourHour RsRw Column (nullable) -->
       <ng-container matColumnDef="fourHourRsRw">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>4 Hours RsRw</th>
-        <td mat-cell *matCellDef="let statistic">
+        <td mat-cell *matCellDef="let statistic" [ngClass]="{'positive-value': statistic.fourHour?.rsrw > 0, 'negative-value': statistic.fourHour.rsrw < 0}">
           {{ statistic.fourHour?.rsrw }}
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100, 200, 500]" aria-label="Select page of users"></mat-paginator>
   <mat-card-footer>
-    <span>Last updated: [Insert Date]</span>
+    <span class="ms-2">Last updated:{{ firstTimestamp }}</span>
   </mat-card-footer>
 </mat-card>

@@ -16,7 +16,7 @@ export interface MarketStatisticsResponse {
     oneHour: TimeframeStatistic;
     twoHour: TimeframeStatistic;
     fourHour: TimeframeStatistic | null;
-    
+    timeStamp: Date;
   }
   
   export interface TimeframeStatistic {

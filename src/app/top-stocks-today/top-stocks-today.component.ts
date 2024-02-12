@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<MarketStatistics>;
+  public firstTimestamp: Date | null = null; 
   displayedColumns: string[] = [
     'ticker', 'atr', 'price',
     'fifteenMinRvol', 'fifteenMinRsRw', 
@@ -46,8 +47,11 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     );
 
     this.marketStatistics$.subscribe(data => {
-      this.dataSource.data = data;
-      console.log(data);
+      this.dataSource.data = data;    
+      if (data && data.length > 0) {
+        this.firstTimestamp = data[0].timeStamp;
+        console.log(this.firstTimestamp)
+      }
     });
 
     this.dataSource.sortingDataAccessor = (item, property) => {
