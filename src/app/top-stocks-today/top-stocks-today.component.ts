@@ -17,7 +17,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<MarketStatistics>;
   public firstTimestamp: Date | null = null; 
   displayedColumns: string[] = [
-    'ticker', 'atr', 'price',
+    'ticker', 'price', 'atr',
     'fifteenMinRvol', 'fifteenMinRsRw', 
     'thirtyMinRvol', 'thirtyMinRsRw',
     'oneHourRvol', 'oneHourRsRw',
@@ -50,7 +50,6 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
       this.dataSource.data = data;    
       if (data && data.length > 0) {
         this.firstTimestamp = data[0].timeStamp;
-        console.log(this.firstTimestamp)
       }
     });
 
