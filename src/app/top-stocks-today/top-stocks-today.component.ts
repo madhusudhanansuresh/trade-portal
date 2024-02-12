@@ -68,12 +68,84 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
         default: return (item as any)[property];
       }
     };
-
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      if (!filter) return true;
+    
+      const [filterType, filterValue] = filter.split(':');
+      const value = parseFloat(filterValue);
+    
+      switch (filterType) {
+        case 'price':
+          return data.price > value;
+        case 'rv':
+          return data.thirtyMin.rvol > value;
+        // Add cases for other filter types as needed
+        default:
+          return true;
+      }
+    };
+    
   }
+
+  // applyFilter(event: Event) {
+  //   console.log((event.target as HTMLInputElement).value);
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+
+  priceFilters = [
+    { value: '', viewValue: '' },
+    {value: '>30', viewValue: '>30'},
+    {value: '>50', viewValue: '>50'},
+    {value: '>100', viewValue: '>100'},
+  ];
+
+  rvFilters = [
+    { value: '', viewValue: '' },
+    {value: '>150', viewValue: '>150'},
+    {value: '>200', viewValue: '>200'},
+    {value: '>300', viewValue: '>300'},
+  ];
+
+  rsFilters = [
+    { value: '', viewValue: '' },
+    {value: '>100', viewValue: '>100'},
+    {value: '>200', viewValue: '>200'},
+    {value: '>(100)', viewValue: '>(100)'},
+    {value: '>(200)', viewValue: '>(200)'},
+  ];
+
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = 'ticker:' + filterValue;
   }
-
+  
+  applyPriceFilter(filterValue: string) {
+    if (filterValue === '') {
+      this.dataSource.filter = '';
+    } else {
+      const isNegative = filterValue.includes('(');
+      let value = filterValue.substring(1);
+      if (isNegative) {
+        const match = value.match(/\d+/);
+        value = match ? '-' + match[0] : '0'; // Use '0' or some other default value if no match
+      }
+      this.dataSource.filter = 'price:' + value;
+    }
+  }
+  
+  apply30mRvFilter(filterValue: string) {
+    if (filterValue === '') {
+      this.dataSource.filter = '';
+    } else {
+      const isNegative = filterValue.includes('(');
+      let value = filterValue.substring(1);
+      if (isNegative) {
+        const match = value.match(/\d+/);
+        value = match ? '-' + match[0] : '0'; // Use '0' or some other default value if no match
+      }
+      this.dataSource.filter = 'rv:' + value;
+    }
+  }  
 }
