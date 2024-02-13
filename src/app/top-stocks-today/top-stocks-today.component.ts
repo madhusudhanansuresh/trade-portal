@@ -124,13 +124,19 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
       // Check rs filter
       if (this.filterStates.rs) {
-        const [, value] = this.filterStates.rs.split(":");
-        const rsValue = parseFloat(value);
-        if (!(data.thirtyMin.rsrw > rsValue)) {
-          return false;
+        const [, condition] = this.filterStates.rs.split(":");
+        const match = condition.match(/([<>])(\d+)/);
+        if (match) {
+            const operator = match[1];
+            const rsValue = parseFloat(match[2]);
+            
+            if (operator === '>' && data.thirtyMin.rsrw <= rsValue) {
+                return false;
+            } else if (operator === '<' && data.thirtyMin.rsrw >= rsValue) {
+                return false;
+            }
         }
-      }
-
+    }
       return true;
     };
   }
@@ -197,18 +203,26 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   apply30mRsFilter(filterValue: string) {
     if (filterValue === "") {
-      this.filterStates.rs = "";
+        this.filterStates.rs = "";
     } else {
-      const isNegative = filterValue.includes("(");
-      let value = filterValue.substring(1);
-      if (isNegative) {
-        const match = value.match(/\d+/);
-        value = match ? "-" + match[0] : "0";
-      }
-      this.filterStates.rs = "rs:" + value;
+        let operator = filterValue[0];
+        let value = filterValue.substring(1);
+        
+        if (operator === "(" && filterValue.endsWith(")")) {
+            // Interpret parentheses as less than
+            operator = "<";
+            const match = value.match(/\d+/);
+            value = match ? match[0] : "0"; // Extract number without parentheses
+        } else if (operator !== ">") {
+            // Default to greater than if no valid operator is found
+            operator = ">";
+            value = filterValue; // Use the original value as it might not have an operator
+        }
+        
+        this.filterStates.rs = "rs:" + operator + value;
     }
     this.applyFilters();
-  }
+}
 
   applyFilters() {
     this.dataSource.filter = Math.random().toString(); // Trigger filterPredicate with a dummy value
