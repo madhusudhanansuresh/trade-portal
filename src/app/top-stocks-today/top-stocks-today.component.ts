@@ -1,36 +1,50 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../src/app/store'; // Make sure the path is correct
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'; // Corrected import for 'map'
-import { MarketStatistics } from '../models/trade-user-interface'; // Adjust the path as needed
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../../src/app/store"; // Make sure the path is correct
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators"; // Corrected import for 'map'
+import { MarketStatistics } from "../models/trade-user-interface"; // Adjust the path as needed
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
-  selector: 'app-top-stocks-today',
-  templateUrl: './top-stocks-today.component.html',
-  styleUrls: ['./top-stocks-today.component.scss'], // Corrected property name and array syntax
+  selector: "app-top-stocks-today",
+  templateUrl: "./top-stocks-today.component.html",
+  styleUrls: ["./top-stocks-today.component.scss"], // Corrected property name and array syntax
 })
 export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<MarketStatistics>;
-  public firstTimestamp: Date | null = null; 
+  public firstTimestamp: Date | null = null;
   displayedColumns: string[] = [
-    'ticker', 'price', 'atr',
-    'fifteenMinRvol', 'fifteenMinRsRw', 
-    'thirtyMinRvol', 'thirtyMinRsRw',
-    'oneHourRvol', 'oneHourRsRw',
-    'twoHourRvol', 'twoHourRsRw',
-    'fourHourRvol', 'fourHourRsRw'
+    "ticker",
+    "price",
+    "atr",
+    "fifteenMinRvol",
+    "fifteenMinRsRw",
+    "thirtyMinRvol",
+    "thirtyMinRsRw",
+    "oneHourRvol",
+    "oneHourRsRw",
+    "twoHourRvol",
+    "twoHourRsRw",
+    "fourHourRvol",
+    "fourHourRsRw",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
-  marketStatistics$!: Observable<MarketStatistics[]>; // Removed unnecessary non-null assertion (!)
 
-  constructor(private store: Store<any>) { // Consider replacing any with your AppState interface
+  marketStatistics$!: Observable<MarketStatistics[]>; // Removed unnecessary non-null assertion (!)
+  filterStates = {
+    ticker: "",
+    price: "",
+    rv: "",
+    rs: "",
+  };
+
+  constructor(private store: Store<any>) {
+    // Consider replacing any with your AppState interface
     this.dataSource = new MatTableDataSource<MarketStatistics>([]);
   }
 
@@ -42,12 +56,12 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store.dispatch(fromRoot.searchStockData({ payload: {} }));
 
-    this.marketStatistics$ = this.store.select(fromRoot.getStockData).pipe(
-      map(data => data?.listMarketStatistics || [])
-    );
+    this.marketStatistics$ = this.store
+      .select(fromRoot.getStockData)
+      .pipe(map((data) => data?.listMarketStatistics || []));
 
-    this.marketStatistics$.subscribe(data => {
-      this.dataSource.data = data;    
+    this.marketStatistics$.subscribe((data) => {
+      this.dataSource.data = data;
       if (data && data.length > 0) {
         this.firstTimestamp = data[0].timeStamp;
       }
@@ -55,97 +69,148 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'fifteenMinRvol': return item.fifteenMin.rvol;
-        case 'fifteenMinRsRw': return item.fifteenMin.rsrw;
-        case 'thirtyMinRvol': return item.thirtyMin.rvol;
-        case 'thirtyMinRsRw': return item.thirtyMin.rsrw;
-        case 'oneHourRvol': return item.oneHour.rvol;
-        case 'oneHourRsRw': return item.oneHour.rsrw;
-        case 'twoHourRvol': return item.twoHour.rvol;
-        case 'twoHourRsRw': return item.twoHour.rsrw;
-        case 'fourHourRvol': return item.fourHour?.rvol; // Use optional chaining for nullable properties
-        case 'fourHourRsRw': return item.fourHour?.rsrw;
-        default: return (item as any)[property];
+        case "fifteenMinRvol":
+          return item.fifteenMin.rvol;
+        case "fifteenMinRsRw":
+          return item.fifteenMin.rsrw;
+        case "thirtyMinRvol":
+          return item.thirtyMin.rvol;
+        case "thirtyMinRsRw":
+          return item.thirtyMin.rsrw;
+        case "oneHourRvol":
+          return item.oneHour.rvol;
+        case "oneHourRsRw":
+          return item.oneHour.rsrw;
+        case "twoHourRvol":
+          return item.twoHour.rvol;
+        case "twoHourRsRw":
+          return item.twoHour.rsrw;
+        case "fourHourRvol":
+          return item.fourHour?.rvol; // Use optional chaining for nullable properties
+        case "fourHourRsRw":
+          return item.fourHour?.rsrw;
+        default:
+          return (item as any)[property];
       }
     };
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-      if (!filter) return true;
-    
-      const [filterType, filterValue] = filter.split(':');
-      const value = parseFloat(filterValue);
-    
-      switch (filterType) {
-        case 'price':
-          return data.price > value;
-        case 'rv':
-          return data.thirtyMin.rvol > value;
-        // Add cases for other filter types as needed
-        default:
-          return true;
+      // Check ticker filter
+      if (
+        this.filterStates.ticker &&
+        !data.ticker
+          .toLowerCase()
+          .includes(this.filterStates.ticker.toLowerCase())
+      ) {
+        return false;
       }
+
+      // Check price filter
+      if (this.filterStates.price) {
+        const [, value] = this.filterStates.price.split(":");
+        const priceValue = parseFloat(value);
+        if (!(data.price > priceValue)) {
+          return false;
+        }
+      }
+
+      // Check rv filter
+      if (this.filterStates.rv) {
+        const [, value] = this.filterStates.rv.split(":");
+        const rvValue = parseFloat(value);
+        if (!(data.thirtyMin.rvol > rvValue)) {
+          return false;
+        }
+      }
+
+      // Check rs filter
+      if (this.filterStates.rs) {
+        const [, value] = this.filterStates.rs.split(":");
+        const rsValue = parseFloat(value);
+        if (!(data.thirtyMin.rsrw > rsValue)) {
+          return false;
+        }
+      }
+
+      return true;
     };
-    
   }
 
-  // applyFilter(event: Event) {
-  //   console.log((event.target as HTMLInputElement).value);
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
-
   priceFilters = [
-    { value: '', viewValue: '' },
-    {value: '>30', viewValue: '>30'},
-    {value: '>50', viewValue: '>50'},
-    {value: '>100', viewValue: '>100'},
+    { value: "", viewValue: "" },
+    { value: ">30", viewValue: ">30" },
+    { value: ">50", viewValue: ">50" },
+    { value: ">100", viewValue: ">100" },
   ];
 
   rvFilters = [
-    { value: '', viewValue: '' },
-    {value: '>150', viewValue: '>150'},
-    {value: '>200', viewValue: '>200'},
-    {value: '>300', viewValue: '>300'},
+    { value: "", viewValue: "" },
+    { value: ">150", viewValue: ">150" },
+    { value: ">200", viewValue: ">200" },
+    { value: ">300", viewValue: ">300" },
   ];
 
   rsFilters = [
-    { value: '', viewValue: '' },
-    {value: '>100', viewValue: '>100'},
-    {value: '>200', viewValue: '>200'},
-    {value: '>(100)', viewValue: '>(100)'},
-    {value: '>(200)', viewValue: '>(200)'},
+    { value: "", viewValue: "" },
+    { value: ">100", viewValue: ">100" },
+    { value: ">200", viewValue: ">200" },
+    { value: "<(100)", viewValue: "<(100)" },
+    { value: "<(200)", viewValue: "<(200)" },
   ];
 
-
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filter = 'ticker:' + filterValue;
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
+    this.filterStates.ticker = filterValue;
+    this.applyFilters();
   }
-  
+
   applyPriceFilter(filterValue: string) {
-    if (filterValue === '') {
-      this.dataSource.filter = '';
+    if (filterValue === "") {
+      this.filterStates.price = "";
     } else {
-      const isNegative = filterValue.includes('(');
+      const isNegative = filterValue.includes("(");
       let value = filterValue.substring(1);
       if (isNegative) {
         const match = value.match(/\d+/);
-        value = match ? '-' + match[0] : '0'; // Use '0' or some other default value if no match
+        value = match ? "-" + match[0] : "0";
       }
-      this.dataSource.filter = 'price:' + value;
+      this.filterStates.price = "price:" + value;
     }
+    this.applyFilters();
   }
-  
+
   apply30mRvFilter(filterValue: string) {
-    if (filterValue === '') {
-      this.dataSource.filter = '';
+    if (filterValue === "") {
+      this.filterStates.rv = "";
     } else {
-      const isNegative = filterValue.includes('(');
+      const isNegative = filterValue.includes("(");
       let value = filterValue.substring(1);
       if (isNegative) {
         const match = value.match(/\d+/);
-        value = match ? '-' + match[0] : '0'; // Use '0' or some other default value if no match
+        value = match ? "-" + match[0] : "0";
       }
-      this.dataSource.filter = 'rv:' + value;
+      this.filterStates.rv = "rv:" + value;
     }
-  }  
+    this.applyFilters();
+  }
+
+  apply30mRsFilter(filterValue: string) {
+    if (filterValue === "") {
+      this.filterStates.rs = "";
+    } else {
+      const isNegative = filterValue.includes("(");
+      let value = filterValue.substring(1);
+      if (isNegative) {
+        const match = value.match(/\d+/);
+        value = match ? "-" + match[0] : "0";
+      }
+      this.filterStates.rs = "rs:" + value;
+    }
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    this.dataSource.filter = Math.random().toString(); // Trigger filterPredicate with a dummy value
+  }
 }
