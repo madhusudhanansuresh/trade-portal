@@ -125,18 +125,18 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
       // Check rs filter
       if (this.filterStates.rs) {
         const [, condition] = this.filterStates.rs.split(":");
-        const match = condition.match(/([<>])(\d+)/);
-        if (match) {
-            const operator = match[1];
-            const rsValue = parseFloat(match[2]);
-            
-            if (operator === '>' && data.thirtyMin.rsrw <= rsValue) {
-                return false;
-            } else if (operator === '<' && data.thirtyMin.rsrw >= rsValue) {
-                return false;
-            }
+        const operator = condition[0];
+        const rsValue = parseFloat(condition.substring(1));
+
+        // Apply greater than filter
+        if (operator === ">" && !(data.thirtyMin.rsrw > rsValue)) {
+          return false;
         }
-    }
+        // Apply less than filter
+        else if (operator === "<" && !(data.thirtyMin.rsrw < rsValue)) {
+          return false;
+        }
+      }
       return true;
     };
   }
@@ -153,14 +153,17 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     { value: ">150", viewValue: ">150" },
     { value: ">200", viewValue: ">200" },
     { value: ">300", viewValue: ">300" },
+    { value: ">400", viewValue: ">400" },
   ];
 
   rsFilters = [
     { value: "", viewValue: "" },
     { value: ">100", viewValue: ">100" },
     { value: ">200", viewValue: ">200" },
-    { value: "<(100)", viewValue: "<(100)" },
-    { value: "<(200)", viewValue: "<(200)" },
+    { value: ">300", viewValue: ">300" },
+    { value: "<-100", viewValue: "<(100)" },
+    { value: "<-200", viewValue: "<(200)" },
+    { value: "<-300", viewValue: "<(300)" },
   ];
 
   applyFilter(event: Event) {
@@ -190,12 +193,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     if (filterValue === "") {
       this.filterStates.rv = "";
     } else {
-      const isNegative = filterValue.includes("(");
       let value = filterValue.substring(1);
-      if (isNegative) {
-        const match = value.match(/\d+/);
-        value = match ? "-" + match[0] : "0";
-      }
       this.filterStates.rv = "rv:" + value;
     }
     this.applyFilters();
@@ -203,28 +201,15 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   apply30mRsFilter(filterValue: string) {
     if (filterValue === "") {
-        this.filterStates.rs = "";
+      this.filterStates.rs = "";
     } else {
-        let operator = filterValue[0];
-        let value = filterValue.substring(1);
-        
-        if (operator === "(" && filterValue.endsWith(")")) {
-            // Interpret parentheses as less than
-            operator = "<";
-            const match = value.match(/\d+/);
-            value = match ? match[0] : "0"; // Extract number without parentheses
-        } else if (operator !== ">") {
-            // Default to greater than if no valid operator is found
-            operator = ">";
-            value = filterValue; // Use the original value as it might not have an operator
-        }
-        
-        this.filterStates.rs = "rs:" + operator + value;
+      this.filterStates.rs = filterValue ? "rs:" + filterValue : "";
+      console.log(this.filterStates.rs);
     }
     this.applyFilters();
-}
+  }
 
   applyFilters() {
-    this.dataSource.filter = Math.random().toString(); // Trigger filterPredicate with a dummy value
+    this.dataSource.filter = Math.random().toString();
   }
 }

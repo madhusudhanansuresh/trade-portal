@@ -1,41 +1,50 @@
+<div class="container mt-4">
+  <div class="row">
+    <!-- Ticker Field -->
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Ticker</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="search">
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="outline" class="mt-4 price-select-header">
-    <mat-label>Ticker</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="search"
-      #input
-    />
-  </mat-form-field>
+    <!-- Price Field -->
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Price</mat-label>
+        <mat-select (selectionChange)="applyPriceFilter($event.value)" disableOptionCentering>
+          <mat-option *ngFor="let priceFilter of priceFilters" [value]="priceFilter.value">
+            {{ priceFilter.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="outline" class="ms-2 price-select-header">
-    <mat-label>Price</mat-label>
-    <mat-select placeholder="price" (selectionChange)="applyPriceFilter($event.value)" disableOptionCentering>
-      <mat-option *ngFor="let priceFilter of priceFilters" [value]="priceFilter.value">
-        {{ priceFilter.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- 30mRv Field -->
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>30mRv</mat-label>
+        <mat-select (selectionChange)="apply30mRvFilter($event.value)" disableOptionCentering>
+          <mat-option *ngFor="let rvFilter of rvFilters" [value]="rvFilter.value">
+            {{ rvFilter.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="outline" class="ms-2 thirtymin-rv-select-header">
-    <mat-label>30mRv</mat-label>
-    <mat-select placeholder="rv" (selectionChange)="apply30mRvFilter($event.value)" disableOptionCentering>
-      <mat-option *ngFor="let rvFilter of rvFilters" [value]="rvFilter.value">
-        {{ rvFilter.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="ms-2 thirtymin-rsrw-select-header">
-    <mat-label>30mRsrw</mat-label>
-    <mat-select placeholder="rsrw" (selectionChange)="apply30mRsFilter($event.value)" disableOptionCentering>
-      <mat-option *ngFor="let rsFilter of rsFilters" [value]="rsFilter.value">
-        {{ rsFilter.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
+    <!-- 30mRsrw Field -->
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>30mRsrw</mat-label>
+        <mat-select (selectionChange)="apply30mRsFilter($event.value)" disableOptionCentering>
+          <mat-option *ngFor="let rsFilter of rsFilters" [value]="rsFilter.value">
+            {{ rsFilter.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
 
   <mat-card class="mt-4 statistics-card">
   <table
