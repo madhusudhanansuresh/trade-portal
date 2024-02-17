@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
-import * as fromRoot from "../../../src/app/store"; // Make sure the path is correct
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators"; // Corrected import for 'map'
+import * as fromRoot from "../../../src/app/store";
+import { Observable, Subscription, forkJoin } from "rxjs";
+import { filter, map, take } from "rxjs/operators"; // Corrected import for 'map'
 import { MarketStatistics } from "../models/trade-user-interface"; // Adjust the path as needed
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -14,6 +14,8 @@ import { MatSort } from "@angular/material/sort";
   styleUrls: ["./top-stocks-today.component.scss"], // Corrected property name and array syntax
 })
 export class TopStocksTodayComponent implements OnInit, AfterViewInit {
+  private subscription: Subscription = new Subscription();
+  getStockDataStatus$!: Observable<boolean>;
   dataSource: MatTableDataSource<MarketStatistics>;
   public firstTimestamp: Date | null = null;
   displayedColumns: string[] = [
@@ -35,7 +37,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  marketStatistics$!: Observable<MarketStatistics[]>; // Removed unnecessary non-null assertion (!)
+  marketStatistics$!: Observable<MarketStatistics[]>;
   filterStates = {
     ticker: "",
     price: "",
@@ -44,7 +46,6 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   };
 
   constructor(private store: Store<any>) {
-    // Consider replacing any with your AppState interface
     this.dataSource = new MatTableDataSource<MarketStatistics>([]);
   }
 
@@ -54,18 +55,18 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fromRoot.searchStockData({ payload: {} }));
-
     this.marketStatistics$ = this.store
       .select(fromRoot.getStockData)
       .pipe(map((data) => data?.listMarketStatistics || []));
 
-    this.marketStatistics$.subscribe((data) => {
-      this.dataSource.data = data;
-      if (data && data.length > 0) {
-        this.firstTimestamp = data[0].timeStamp;
-      }
-    });
+    this.subscription.add(
+      this.marketStatistics$.subscribe((data) => {
+        this.dataSource.data = data;
+        if (data && data.length > 0) {
+          this.firstTimestamp = data[0].timeStamp;
+        }
+      })
+    );
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
@@ -143,6 +144,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   priceFilters = [
     { value: "", viewValue: "" },
+    { value: ">20", viewValue: ">20" },
     { value: ">30", viewValue: ">30" },
     { value: ">50", viewValue: ">50" },
     { value: ">100", viewValue: ">100" },
@@ -211,5 +213,9 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   applyFilters() {
     this.dataSource.filter = Math.random().toString();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,0 +1,17 @@
+<div class="mt-4 bg-light text-dark text-center p-3 mb-4">
+    <h2>Market Statistics</h2>
+</div>
+
+<ng-container *ngIf="(getStockDataStatus$ | async) === true">
+<app-top-stocks-today></app-top-stocks-today>
+</ng-container>
+
+
+
+<div class="mt-4 bg-light text-dark text-center p-3 mb-4">
+    <h2>Top Longs Today</h2>
+</div>
+
+<ng-container *ngIf="(getStockDataStatus$ | async) === true">
+    <app-top-longs-today></app-top-longs-today>
+</ng-container>

@@ -21,6 +21,6 @@ export interface MarketStatisticsResponse {
   
   export interface TimeframeStatistic {
     rvol: number;
-    rsrw: number | null;
+    rsrw: number;
   }
   

@@ -22,12 +22,18 @@ import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MarketStatisticsComponent } from './market-statistics/market-statistics.component';
+import { TopLongsTodayComponent } from './top-longs-today/top-longs-today.component';
+import { TopShortsTodayComponent } from './top-shorts-today/top-shorts-today.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppProgressSpinnerComponent,
-    TopStocksTodayComponent
+    TopStocksTodayComponent,
+    MarketStatisticsComponent,
+    TopLongsTodayComponent,
+    TopShortsTodayComponent
   ],
   imports: [
     BrowserModule,
