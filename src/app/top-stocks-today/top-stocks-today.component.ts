@@ -144,7 +144,6 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   priceFilters = [
     { value: "", viewValue: "" },
-    { value: ">20", viewValue: ">20" },
     { value: ">30", viewValue: ">30" },
     { value: ">50", viewValue: ">50" },
     { value: ">100", viewValue: ">100" },
