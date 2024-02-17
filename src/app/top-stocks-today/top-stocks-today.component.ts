@@ -220,7 +220,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
       width: '400px',
-      height: '250px'
+      height: '220px'
     });
   
     dialogRef.afterClosed().subscribe(result => {
