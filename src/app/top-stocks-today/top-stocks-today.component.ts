@@ -7,6 +7,8 @@ import { MarketStatistics } from "../models/trade-user-interface"; // Adjust the
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { ReasonDialogComponent } from "../reason-dialog/reason-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-top-stocks-today",
@@ -32,6 +34,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     "twoHourRsRw",
     "fourHourRvol",
     "fourHourRsRw",
+    "action"
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,7 +48,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     rs: "",
   };
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<MarketStatistics>([]);
   }
 
@@ -213,6 +216,18 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   applyFilters() {
     this.dataSource.filter = Math.random().toString();
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReasonDialogComponent, {
+      width: '400px',
+      height: '250px'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with reason:', result);
+    });
+  }
+  
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

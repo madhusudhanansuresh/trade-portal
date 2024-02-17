@@ -20,11 +20,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 import { MarketStatisticsComponent } from './market-statistics/market-statistics.component';
 import { TopLongsTodayComponent } from './top-longs-today/top-longs-today.component';
 import { TopShortsTodayComponent } from './top-shorts-today/top-shorts-today.component';
+import { ReasonDialogComponent } from './reason-dialog/reason-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -33,19 +38,24 @@ import { TopShortsTodayComponent } from './top-shorts-today/top-shorts-today.com
     TopStocksTodayComponent,
     MarketStatisticsComponent,
     TopLongsTodayComponent,
-    TopShortsTodayComponent
+    TopShortsTodayComponent,
+    ReasonDialogComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     MatSelectModule,
+    MatIconModule,
     MatPaginatorModule,
+    MatButtonModule,
     MatCardModule,
     HttpClientModule,
     EffectsModule.forRoot(effects),
