@@ -17,10 +17,7 @@ export class MarketStatisticsComponent {
 
   ngOnInit(): void {
     this.store.dispatch(fromRoot.searchStockData({ payload: {} }));
-
     this.getStockDataStatus$  = this.store.select(fromRoot.getStockDataStatus);
-
-
   }
 
 }

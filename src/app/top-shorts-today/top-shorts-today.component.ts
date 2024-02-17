@@ -61,13 +61,18 @@ export class TopShortsTodayComponent {
       this.subscription.add(
         this.marketStatistics$
           .pipe(
-            map(data => data.filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin && statistic.thirtyMin.rsrw < -1 ))
+            map(data => data
+              .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin.rsrw < -1)
+              // Modifying sort here to order by rsrw in ascending order
+              .sort((a, b) => a.thirtyMin.rsrw - b.thirtyMin.rsrw)
+            )
           )
           .subscribe(filteredData => {
             this.dataSource.data = filteredData;
-            console.log(filteredData);
           })
       );
+      
+      
 
 
     this.dataSource.sortingDataAccessor = (item, property) => {

@@ -61,13 +61,16 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
       this.subscription.add(
         this.marketStatistics$
           .pipe(
-            map(data => data.filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin && statistic.thirtyMin.rsrw > 1.0 ))
+            map(data => data
+              .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin.rsrw > 1)
+              .sort((a, b) => b.thirtyMin.rsrw - a.thirtyMin.rsrw)
+            )
           )
           .subscribe(filteredData => {
             this.dataSource.data = filteredData;
-            console.log(filteredData);
           })
       );
+      
 
 
     this.dataSource.sortingDataAccessor = (item, property) => {
