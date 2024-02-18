@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { MarketStatisticsResponse } from "../models/trade-user-interface";
+import { AddOrRemoveWatchlist, MarketStatisticsResponse, WatchlistResponse } from "../models/trade-user-interface";
 import { environment } from "../../environments/environment";
 
 
@@ -19,5 +19,19 @@ export class TradeUserService {
         const request = {
         }
         return this.http.post<any>(`${this.baseUrl}/api/marketStatistics`, request);
+    }
+
+    addOrRemoveWatchlistItem(payload: any): Observable<AddOrRemoveWatchlist> {
+        const request = {
+            ...payload
+        }
+        console.log(request);
+        return this.http.post<any>(`${this.baseUrl}/api/addOrRemoveWatchlist`, request);
+    }
+
+    searchWatchlist(): Observable<WatchlistResponse> {
+        const request = {
+        }
+        return this.http.post<any>(`${this.baseUrl}/api/listWatchlist`, request);
     }
 }

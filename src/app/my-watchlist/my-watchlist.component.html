@@ -14,15 +14,6 @@
           <td mat-cell *matCellDef="let statistic">{{ statistic.price }}</td>
         </ng-container>
     
-    
-        <!-- ATR Column -->
-        <ng-container matColumnDef="atr">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="grey-header">
-            ATR
-          </th>
-          <td mat-cell *matCellDef="let statistic">{{ statistic.atr }}</td>
-        </ng-container>
-    
         <!-- FifteenMin Rvol Column -->
         <ng-container matColumnDef="fifteenMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRv</th>
@@ -133,15 +124,23 @@
           </td>
         </ng-container>
 
-         <!-- Action -->
-         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
+         <!-- Reason Column (nullable) -->
+         <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Reason</th>
           <td mat-cell *matCellDef="let statistic">
-            <button mat-mini-fab class="green-button" (click)= "openDialog(statistic.ticker)" aria-label="Add to watchlist">
-              <mat-icon>add</mat-icon>
-            </button>
+            {{ statistic.reason }}
           </td>
         </ng-container>
+
+          <!-- Action -->
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let statistic">
+              <button mat-mini-fab class="warn" (click)= "remove(statistic.ticker)" aria-label="Add to watchlist">
+                <mat-icon>close</mat-icon>
+              </button>
+            </td>
+          </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

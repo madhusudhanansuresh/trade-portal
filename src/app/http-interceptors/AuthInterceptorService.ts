@@ -14,7 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    let authToken = 'gtkssYEu6sjBBRxHCx9VXffXHf0otf39CdhgHG4Dr87RAzFuzoR0uw==';
+    let authToken = '0jGopc7yWzwKJjdK8SJqciaq-czIrNYLElE_hw5Zj1VYAzFutsq2hA==';
     const authReq = authToken
       ? req.clone({
           headers: req.headers.set('x-functions-key', `${authToken}`)

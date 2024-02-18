@@ -23,3 +23,12 @@
 <ng-container *ngIf="(getStockDataStatus$ | async) === true">
 <app-top-shorts-today></app-top-shorts-today>
 </ng-container>
+
+
+<div class="mt-4 bg-light text-dark text-center">
+    <h2>My Watchlist</h2>
+</div>
+
+<ng-container *ngIf="(getStockDataStatus$ | async) === true">
+<app-my-watchlist></app-my-watchlist>
+</ng-container>

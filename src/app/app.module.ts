@@ -30,6 +30,7 @@ import { TopLongsTodayComponent } from './top-longs-today/top-longs-today.compon
 import { TopShortsTodayComponent } from './top-shorts-today/top-shorts-today.component';
 import { ReasonDialogComponent } from './reason-dialog/reason-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MyWatchlistComponent } from './my-watchlist/my-watchlist.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MarketStatisticsComponent,
     TopLongsTodayComponent,
     TopShortsTodayComponent,
-    ReasonDialogComponent
+    ReasonDialogComponent,
+    MyWatchlistComponent
   ],
   imports: [
     BrowserModule,

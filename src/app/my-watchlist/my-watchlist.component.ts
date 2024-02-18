@@ -1,28 +1,29 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../../src/app/store";
-import { Observable, Subscription } from "rxjs";
-import { filter, map } from "rxjs/operators"; // Corrected import for 'map'
-import { MarketStatistics } from "../models/trade-user-interface"; // Adjust the path as needed
+import { Observable, Subscription, combineLatest, forkJoin } from "rxjs";
+import { map } from "rxjs/operators"; // Corrected import for 'map'
+import {
+  MarketStatistics,
+  Watchlist,
+  WatchlistResponse,
+} from "../models/trade-user-interface"; // Adjust the path as needed
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatDialog } from "@angular/material/dialog";
-import { ReasonDialogComponent } from "../reason-dialog/reason-dialog.component";
 
 @Component({
-  selector: "app-top-longs-today",
-  templateUrl: "./top-longs-today.component.html",
-  styleUrl: "./top-longs-today.component.scss",
+  selector: "app-my-watchlist",
+  templateUrl: "./my-watchlist.component.html",
+  styleUrl: "./my-watchlist.component.scss",
 })
-export class TopLongsTodayComponent implements OnInit, AfterViewInit {
+export class MyWatchlistComponent implements OnInit, AfterViewInit {
   private subscription: Subscription = new Subscription();
   dataSource: MatTableDataSource<MarketStatistics>;
   public firstTimestamp: Date | null = null;
   displayedColumns: string[] = [
     "ticker",
     "price",
-    "atr",
     "fifteenMinRvol",
     "fifteenMinRsRw",
     "thirtyMinRvol",
@@ -33,6 +34,7 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     "twoHourRsRw",
     "fourHourRvol",
     "fourHourRsRw",
+    "reason",
     "action"
   ];
 
@@ -40,6 +42,8 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   marketStatistics$!: Observable<MarketStatistics[]>; // Removed unnecessary non-null assertion (!)
+  watchlist$!: Observable<Watchlist[]>;
+
   filterStates = {
     ticker: "",
     price: "",
@@ -47,7 +51,7 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     rs: "",
   };
 
-  constructor(private store: Store<any>, public dialog: MatDialog) {
+  constructor(private store: Store<any>) {
     this.dataSource = new MatTableDataSource<MarketStatistics>([]);
   }
 
@@ -61,20 +65,41 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
       .select(fromRoot.getStockData)
       .pipe(map((data) => data?.listMarketStatistics || []));
 
-      this.subscription.add(
-        this.marketStatistics$
-          .pipe(
-            map(data => data
-              .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin.rsrw > 1)
-              .sort((a, b) => b.thirtyMin.rsrw - a.thirtyMin.rsrw)
-            )
-          )
-          .subscribe(filteredData => {
-            this.dataSource.data = filteredData;
-          })
-      );
-      
+    this.watchlist$ = this.store
+      .select(fromRoot.getWatchlist)
+      .pipe(map((data) => data?.watchlist || []));
 
+    this.subscription.add(
+      combineLatest([this.marketStatistics$, this.watchlist$])
+        .pipe(
+          map(([marketStatistics, watchlist]) => {
+            // First, filter marketStatistics to only include items present in the watchlist
+            const filteredStatistics = marketStatistics.filter((statistic) =>
+              watchlist.some(
+                (watchlistItem) => watchlistItem.tickerName === statistic.ticker
+              )
+            );
+
+            // Then, enhance the filtered market statistics with additional data from the watchlist
+            return filteredStatistics.map((statistic) => {
+              const watchlistItem = watchlist.find(
+                (watchlistItem) => watchlistItem.tickerName === statistic.ticker
+              );
+              return {
+                ...statistic,
+                lastUpdated: watchlistItem?.lastUpdated,
+                reason: watchlistItem?.reason,
+              };
+            });
+          })
+        )
+        .subscribe((filteredAndEnhancedData) => {
+          this.dataSource.data = filteredAndEnhancedData;
+          if (filteredAndEnhancedData && filteredAndEnhancedData.length > 0) {
+            this.firstTimestamp = filteredAndEnhancedData[0].timeStamp;
+          }
+        })
+    );
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
@@ -104,20 +129,12 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     };
   }
 
-  openDialog(ticker: string): void {
-    const dialogRef = this.dialog.open(ReasonDialogComponent, {
-      width: '400px',
-      height: '220px'
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      const payload = {
-        tickerName: ticker,
-        reason: result,
-        action: 'add'
-      }
-      this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({payload}));
-    });
+  remove(ticker: string): void {
+    const payload = {
+      tickerName: ticker,
+      action: 'remove'
+    }
+    this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({payload}));
   }
 
   ngOnDestroy() {

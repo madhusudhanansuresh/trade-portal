@@ -8,6 +8,8 @@ export const getTradeState = createSelector(
 
 export const getStockData = createSelector(getTradeState, state => state?.marketStatistics);
 
+export const getWatchlist = createSelector(getTradeState, state => state?.watchlistResponse);
+
 export const getStockDataStatus = createSelector(getTradeState, state => state?.searchStockDataSuccess);
 
 

@@ -217,14 +217,19 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = Math.random().toString();
   }
 
-  openDialog(): void {
+  openDialog(ticker: string): void {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
       width: '400px',
       height: '220px'
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with reason:', result);
+      const payload = {
+        tickerName: ticker,
+        reason: result,
+        action: 'add'
+      }
+      this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({payload}));
     });
   }
   

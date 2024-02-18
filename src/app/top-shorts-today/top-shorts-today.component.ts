@@ -7,13 +7,15 @@ import { MarketStatistics } from "../models/trade-user-interface"; // Adjust the
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { ReasonDialogComponent } from "../reason-dialog/reason-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-top-shorts-today',
   templateUrl: './top-shorts-today.component.html',
   styleUrl: './top-shorts-today.component.scss'
 })
-export class TopShortsTodayComponent {
+export class TopShortsTodayComponent implements OnInit, AfterViewInit {
   private subscription: Subscription = new Subscription();
   dataSource: MatTableDataSource<MarketStatistics>;
   public firstTimestamp: Date | null = null;
@@ -31,6 +33,7 @@ export class TopShortsTodayComponent {
     "twoHourRsRw",
     "fourHourRvol",
     "fourHourRsRw",
+    "action"
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,7 +47,7 @@ export class TopShortsTodayComponent {
     rs: "",
   };
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<MarketStatistics>([]);
   }
 
@@ -101,8 +104,24 @@ export class TopShortsTodayComponent {
           return (item as any)[property];
       }
     };
-    
   }
+
+  openDialog(ticker: string): void {
+    const dialogRef = this.dialog.open(ReasonDialogComponent, {
+      width: '400px',
+      height: '220px'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      const payload = {
+        tickerName: ticker,
+        reason: result,
+        action: 'add'
+      }
+      this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({payload}));
+    });
+  }
+  
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

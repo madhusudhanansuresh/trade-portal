@@ -24,3 +24,20 @@ export interface MarketStatisticsResponse {
     rsrw: number;
   }
   
+
+  export interface AddOrRemoveWatchlist {
+    success: boolean;
+    message: string;
+  }
+
+  export interface WatchlistResponse {
+    watchlist: Watchlist[];
+    success: boolean;
+    message: string;
+  }
+
+  export interface Watchlist {
+    tickerName: string,
+    reason: string,
+    lastUpdated: string
+  }
