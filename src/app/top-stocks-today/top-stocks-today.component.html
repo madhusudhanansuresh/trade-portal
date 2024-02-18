@@ -59,7 +59,7 @@
         <!-- Price Column -->
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-          <td mat-cell *matCellDef="let statistic">{{ statistic.price }}</td>
+          <td mat-cell *matCellDef="let statistic">{{ statistic.price | number:'1.2-2' }}</td>
         </ng-container>
 
         <!-- ATR Column -->
@@ -67,7 +67,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="grey-header">
             ATR
           </th>
-          <td mat-cell *matCellDef="let statistic">{{ statistic.atr }}</td>
+          <td mat-cell *matCellDef="let statistic">{{ statistic.atr | number:'1.2-2'}}</td>
         </ng-container>
 
         <!-- FifteenMin Rvol Column -->
@@ -77,7 +77,7 @@
               'positive-value': statistic.fifteenMin.rvol > 100,
               'negative-value': statistic.fifteenMin.rvol < 100
             }">
-            {{ statistic.fifteenMin.rvol }}
+            {{ statistic.fifteenMin.rvol | number:'1.2-2' }}
           </td>
         </ng-container>
 
@@ -88,7 +88,7 @@
               'positive-value': statistic.fifteenMin.rsrw > 0,
               'negative-value': statistic.fifteenMin.rsrw < 0
             }">
-            {{ statistic.fifteenMin.rsrw }}
+            {{ statistic.fifteenMin.rsrw | number:'1.2-2' }}
           </td>
         </ng-container>
 
@@ -99,7 +99,7 @@
               'positive-value': statistic.thirtyMin.rvol > 100,
               'negative-value': statistic.thirtyMin.rvol < 100
             }">
-            {{ statistic.thirtyMin.rvol }}
+            {{ statistic.thirtyMin.rvol | number:'1.2-2' }}
           </td>
         </ng-container>
 
@@ -110,7 +110,7 @@
               'positive-value': statistic.thirtyMin.rsrw > 0,
               'negative-value': statistic.thirtyMin.rsrw < 0
             }">
-            {{ statistic.thirtyMin.rsrw }}
+            {{ statistic.thirtyMin.rsrw | number:'1.2-2'}}
           </td>
         </ng-container>
 
@@ -121,7 +121,7 @@
               'positive-value': statistic.oneHour.rvol > 100,
               'negative-value': statistic.oneHour.rvol < 100
             }">
-            {{ statistic.oneHour.rvol }}
+            {{ statistic.oneHour.rvol | number:'1.2-2' }}
           </td>
         </ng-container>
 
@@ -132,7 +132,7 @@
               'positive-value': statistic.oneHour.rsrw > 0,
               'negative-value': statistic.oneHour.rsrw < 0
             }">
-            {{ statistic.oneHour.rsrw }}
+            {{ statistic.oneHour.rsrw | number:'1.2-2'}}
           </td>
         </ng-container>
 
@@ -143,7 +143,7 @@
               'positive-value': statistic.twoHour.rvol > 100,
               'negative-value': statistic.twoHour.rvol < 100
             }">
-            {{ statistic.twoHour.rvol }}
+            {{ statistic.twoHour.rvol | number:'1.2-2' }}
           </td>
         </ng-container>
 
@@ -154,7 +154,7 @@
               'positive-value': statistic.twoHour?.rsrw > 0,
               'negative-value': statistic.twoHour.rsrw < 0
             }">
-            {{ statistic.twoHour.rsrw }}
+            {{ statistic.twoHour.rsrw | number:'1.2-2'}}
           </td>
         </ng-container>
 
@@ -165,7 +165,7 @@
               'positive-value': statistic.fourHour.rvol > 100,
               'negative-value': statistic.fourHour.rvol < 100
             }">
-            {{ statistic.fourHour?.rvol }}
+            {{ statistic.fourHour?.rvol | number:'1.2-2' }}
           </td>
         </ng-container>
 
@@ -176,7 +176,7 @@
               'positive-value': statistic.fourHour?.rsrw > 0,
               'negative-value': statistic.fourHour.rsrw < 0
             }">
-            {{ statistic.fourHour?.rsrw }}
+            {{ statistic.fourHour?.rsrw | number:'1.2-2'}}
           </td>
         </ng-container>
 

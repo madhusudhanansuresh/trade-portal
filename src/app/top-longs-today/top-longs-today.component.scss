@@ -2,12 +2,9 @@
     background-color: #e0e0e0 !important; /* Grey color, adjust as needed */
   }
   
-  /* Stylesheet for your Angular component */
-  .positive-value {
-    color: green;
-  }
-  
-  .negative-value {
-    color: red;
+
+  .table-responsive {
+    overflow-y: auto;
+    max-height: 500px; /* Adjust based on your needs */
   }
   
