@@ -9,13 +9,14 @@
         <mat-form-field class="w-100">
           <mat-label>Reason</mat-label>
           <textarea matInput [formControl]="reason" placeholder=""></textarea>
+          <mat-error *ngIf="reason.hasError('required')">Reason is required</mat-error>
         </mat-form-field>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-end">
-          <button mat-mini-fab class="green-button"[mat-dialog-close]="reason.value">
+          <button mat-mini-fab class="green-button" (click)="closeDialog()">
             <mat-icon>check</mat-icon>
           </button>
         </div>

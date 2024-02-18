@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reason-dialog',
@@ -7,5 +8,15 @@ import { FormControl } from '@angular/forms';
   styleUrl: './reason-dialog.component.scss'
 })
 export class ReasonDialogComponent {
-  reason = new FormControl(''); // Initializes the form control
+  reason = new FormControl('', Validators.required); // Initializes the form control
+
+  constructor(public dialogRef: MatDialogRef<ReasonDialogComponent>) {}
+
+
+  closeDialog(): void {
+    if (this.reason.valid) {
+      this.dialogRef.close(this.reason.value);
+    }
+  }
+
 }

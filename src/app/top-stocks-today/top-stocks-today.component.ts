@@ -216,6 +216,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   applyFilters() {
     this.dataSource.filter = Math.random().toString();
   }
+  
 
   openDialog(ticker: string): void {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
@@ -224,12 +225,14 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      const payload = {
-        tickerName: ticker,
-        reason: result,
-        action: 'add'
+      if (result) { // Ensure result is not empty
+        const payload = {
+          tickerName: ticker,
+          reason: result,
+          action: 'add'
+        };
+        this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({ payload }));
       }
-      this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({payload}));
     });
   }
   

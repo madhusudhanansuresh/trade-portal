@@ -113,14 +113,17 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      const payload = {
-        tickerName: ticker,
-        reason: result,
-        action: 'add'
+      if (result) { // Ensure result is not empty
+        const payload = {
+          tickerName: ticker,
+          reason: result,
+          action: 'add'
+        };
+        this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({ payload }));
       }
-      this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({payload}));
     });
   }
+  
   
   ngOnDestroy() {
     this.subscription.unsubscribe();
