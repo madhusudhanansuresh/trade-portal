@@ -65,7 +65,7 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
         this.marketStatistics$
           .pipe(
             map(data => data
-              .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin.rsrw < -1)
+              .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin.rsrw < -0.5)
               // Modifying sort here to order by rsrw in ascending order
               .sort((a, b) => a.thirtyMin.rsrw - b.thirtyMin.rsrw)
             )
