@@ -136,7 +136,7 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let statistic">
-              <button mat-mini-fab class="warn" (click)= "remove(statistic.ticker)" aria-label="Add to watchlist">
+              <button mat-mini-fab class="warn" (click)= "remove(statistic.ticker)" aria-label="Remove from watchlist" matTooltip="Remove from watchlist">
                 <mat-icon>close</mat-icon>
               </button>
             </td>

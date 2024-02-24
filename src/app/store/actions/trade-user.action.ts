@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { AddOrRemoveWatchlist, MarketStatisticsResponse, WatchlistResponse } from "../../models/trade-user-interface";
+import { AddOrRemoveWatchlist, ImportMarketData, MarketStatisticsResponse, WatchlistResponse } from "../../models/trade-user-interface";
 import { Observable } from "rxjs";
 
 export const searchStockData = createAction(
@@ -44,6 +44,21 @@ export const searchWatchlistSuccess = createAction(
 
 export const searchWatchlistFail = createAction(
     '[trade-user] Search Watchlist Fail',
+    props<{ error: any }>()
+);
+
+export const importMarketData = createAction(
+    '[trade-user] Import market data',
+    props<{ payload: any }>()
+);
+
+export const importMarketDataSuccess = createAction(
+    '[trade-user] Import market data Success',
+    props<{ importMarketData: ImportMarketData }>()
+);
+
+export const importMarketDataFail = createAction(
+    '[trade-user] Import market data Fail',
     props<{ error: any }>()
 );
     

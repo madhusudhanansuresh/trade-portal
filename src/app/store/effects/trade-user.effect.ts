@@ -55,4 +55,16 @@ export class TradeEffects {
             })
         ))
     ));
+
+    importMarketData$ = createEffect(() => this.action$.pipe(
+        ofType(actions.importMarketData),
+        switchMap((action) => this.tradeUserService.importMarketData(action.payload).pipe(
+            map(res => {
+                return actions.importMarketDataSuccess({ importMarketData: res })
+            }),
+            catchError((error: any) => {
+                return of(actions.importMarketDataFail({ error }))
+            })
+        ))
+    ));
 }

@@ -31,6 +31,11 @@ import { TopShortsTodayComponent } from './top-shorts-today/top-shorts-today.com
 import { ReasonDialogComponent } from './reason-dialog/reason-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MyWatchlistComponent } from './my-watchlist/my-watchlist.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SimulationComponent } from './simulation/simulation.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { RealtimeComponent } from './realtime/realtime.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,9 @@ import { MyWatchlistComponent } from './my-watchlist/my-watchlist.component';
     TopLongsTodayComponent,
     TopShortsTodayComponent,
     ReasonDialogComponent,
-    MyWatchlistComponent
+    MyWatchlistComponent,
+    SimulationComponent,
+    RealtimeComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,10 @@ import { MyWatchlistComponent } from './my-watchlist/my-watchlist.component';
     MatTableModule,
     MatSortModule,
     MatFormFieldModule,
+    MatTooltipModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatDialogModule,
     MatSelectModule,
     MatIconModule,

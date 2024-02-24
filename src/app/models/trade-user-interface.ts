@@ -41,3 +41,8 @@ export interface MarketStatisticsResponse {
     reason: string,
     lastUpdated: string
   }
+
+  export interface ImportMarketData {
+    success: boolean;
+    message: string;
+  }

@@ -34,4 +34,12 @@ export class TradeUserService {
         }
         return this.http.post<any>(`${this.baseUrl}/api/listWatchlist`, request);
     }
+
+    importMarketData(payload: any): Observable<AddOrRemoveWatchlist> {
+        const request = {
+            ...payload
+        }
+        console.log(request);
+        return this.http.post<any>(`${this.baseUrl}/api/importAdhocMarketData`, request);
+    }
 }
