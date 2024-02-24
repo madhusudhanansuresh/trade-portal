@@ -124,7 +124,7 @@ export class SimulationComponent implements OnInit {
   }
 
   initializeTimeOptions(): void {
-    const startTime = new Date(0, 0, 0, 9, 30);
+    const startTime = new Date(0, 0, 0, 9, 45);
     const endTime = new Date(0, 0, 0, 16, 0);
     while (startTime < endTime) {
       this.timeOptions.push(startTime.toTimeString().substring(0, 5));
