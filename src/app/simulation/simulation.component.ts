@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import * as fromRoot from "../../../src/app/store";
 import { Store } from "@ngrx/store";
@@ -8,7 +8,7 @@ import { Store } from "@ngrx/store";
   templateUrl: "./simulation.component.html",
   styleUrl: "./simulation.component.scss",
 })
-export class SimulationComponent {
+export class SimulationComponent implements OnInit {
   dateRangeForm = this.fb.group({
     startDate: [null],
     endDate: [null],
@@ -16,10 +16,15 @@ export class SimulationComponent {
 
   dateTimeForm = this.fb.group({
     selectedDate: [null],
-    selectedTime: [null],
+    selectedTime: [''],
   });
+  timeOptions: string[] = [];
 
   constructor(private store: Store<any>, private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initializeTimeOptions();
+  }
 
   submit() {
     const symbols: string[] = [];
@@ -34,7 +39,6 @@ export class SimulationComponent {
     if (startDateString) {
       const startDate = new Date(startDateString);
       startDateEST = this.adjustDateToEST(startDate, true);
-      console.log("Start Date in EST:", startDateEST);
     } else {
       console.log("Start Date is not provided or invalid.");
     }
@@ -42,7 +46,6 @@ export class SimulationComponent {
     if (endDateString) {
       const endDate = new Date(endDateString);
       endDateEST = this.adjustDateToEST(endDate, false);
-      console.log("End Date in EST:", endDateEST);
     } else {
       console.log("End Date is not provided or invalid.");
     }
@@ -64,7 +67,27 @@ export class SimulationComponent {
   };
 
   submitDateTime() {
-    console.log("Date and Time Form Values:", this.dateTimeForm.value);
+    const selectedDate = this.dateTimeForm.value.selectedDate;
+    const selectedTime = this.dateTimeForm.value.selectedTime;
+
+    if (!selectedDate || !selectedTime) {
+      console.error("Date or time not selected");
+      return;
+    }
+
+    const date = new Date(selectedDate);
+
+    const [hours, minutes] = selectedTime.split(":").map(Number);
+    date.setHours(hours, minutes, 0);
+
+    const formattedDateTime = `${date.getFullYear()}-${this.pad(date.getMonth() + 1)}-${this.pad(date.getDate())} ${this.pad(hours)}:${this.pad(minutes)}:00`;
+
+    console.log(formattedDateTime);
+
+    const payload = {
+      endDateTime: formattedDateTime,
+    };
+    this.store.dispatch(fromRoot.searchStockData({ payload }));
   }
 
   adjustDateToEST(date: Date, isStartDate: boolean): string {
@@ -98,5 +121,18 @@ export class SimulationComponent {
     const formattedDate = `${partToObject["year"]}-${partToObject["month"]}-${partToObject["day"]} ${partToObject["hour"]}:${partToObject["minute"]}:${partToObject["second"]}`;
 
     return formattedDate;
+  }
+
+  initializeTimeOptions(): void {
+    const startTime = new Date(0, 0, 0, 9, 30);
+    const endTime = new Date(0, 0, 0, 16, 0);
+    while (startTime < endTime) {
+      this.timeOptions.push(startTime.toTimeString().substring(0, 5));
+      startTime.setMinutes(startTime.getMinutes() + 15);
+    }
+  }
+
+  pad(number: number) {
+    return number < 10 ? '0' + number : number;
   }
 }

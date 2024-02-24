@@ -19,7 +19,7 @@ export class TradeEffects {
 
     searchStockData$ = createEffect(() => this.action$.pipe(
         ofType(actions.searchStockData),
-        switchMap((action) => this.tradeUserService.searchUsers().pipe(
+        switchMap((action) => this.tradeUserService.searchMarketData(action.payload).pipe(
             map(res => {
                 return actions.searchStockDataSuccess({ marketStatistics: res })
             }),

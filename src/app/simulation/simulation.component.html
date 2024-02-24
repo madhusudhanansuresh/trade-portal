@@ -14,7 +14,7 @@
 </div>
 
 <div class="container mt-4">
-  <form [formGroup]="dateRangeForm" (ngSubmit)="submit()">
+  <form [formGroup]="dateRangeForm">
     <div class="row">
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
@@ -47,7 +47,7 @@
 
 <!-- New Form for Date and Time Picker -->
 <div class="container mt-4">
-  <form [formGroup]="dateTimeForm" (ngSubmit)="submitDateTime()">
+  <form [formGroup]="dateTimeForm">
     <div class="row">
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
@@ -60,7 +60,11 @@
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Select Time</mat-label>
-          <input matInput type="time" formControlName="selectedTime" />
+          <mat-select formControlName="selectedTime">
+            <mat-option *ngFor="let time of timeOptions" [value]="time">{{
+              time
+              }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div class="col-md-3">

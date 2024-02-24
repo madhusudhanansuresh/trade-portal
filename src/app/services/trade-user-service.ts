@@ -15,8 +15,9 @@ export class TradeUserService {
     constructor(private http: HttpClient) {
      }
 
-    searchUsers(): Observable<MarketStatisticsResponse> {
+    searchMarketData(payload: any): Observable<MarketStatisticsResponse> {
         const request = {
+            ...payload
         }
         return this.http.post<any>(`${this.baseUrl}/api/marketStatistics`, request);
     }
