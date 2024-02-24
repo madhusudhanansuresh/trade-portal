@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import * as fromRoot from "../../../src/app/store"; 
+import * as fromRoot from "../../../src/app/store";
 import { Store } from "@ngrx/store";
 
 @Component({
@@ -55,7 +55,6 @@ export class SimulationComponent {
     };
 
     this.store.dispatch(fromRoot.importMarketData({ payload }));
-    
   }
 
   endDateFilter = (d: Date | null): boolean => {
@@ -89,7 +88,14 @@ export class SimulationComponent {
     };
 
     const formatter = new Intl.DateTimeFormat("en-US", options);
-    const formattedDate = formatter.format(adjustedDate);
+    const parts = formatter.formatToParts(adjustedDate);
+
+    const partToObject = parts.reduce((obj, part) => {
+      obj[part.type] = part.value;
+      return obj;
+    }, {} as { [key: string]: string });
+
+    const formattedDate = `${partToObject["year"]}-${partToObject["month"]}-${partToObject["day"]} ${partToObject["hour"]}:${partToObject["minute"]}:${partToObject["second"]}`;
 
     return formattedDate;
   }
