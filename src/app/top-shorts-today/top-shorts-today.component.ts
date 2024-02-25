@@ -66,7 +66,7 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
         .pipe(
           map(data => data
             .filter(statistic => statistic.thirtyMin && statistic.thirtyMin?.rvol > 150 && statistic.thirtyMin?.rsrw < -1)
-            .sort((a, b) => a.thirtyMin.rvol - b.thirtyMin.rvol)
+            .sort((a, b) => b.thirtyMin.rvol - a.thirtyMin.rvol)
           )
         )
         .subscribe(filteredData => {
