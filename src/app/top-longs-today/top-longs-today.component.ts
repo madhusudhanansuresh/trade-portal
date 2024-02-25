@@ -66,7 +66,7 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
         .pipe(
           map(data => data
             .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin?.rsrw > 1)
-            .sort((a, b) => b.thirtyMin.rsrw - a.thirtyMin.rsrw)
+            .sort((a, b) => b.thirtyMin.rvol - a.thirtyMin.rvol)
           )
         )
         .subscribe(filteredData => {
@@ -74,62 +74,24 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
         })
     );
 
-    // this.subscription.add(
-    //   this.marketStatistics$
-    //     .pipe(
-    //       map((data) =>
-    //         data
-    //           .filter((statistic) => {
-    //             // Decide between thirtyMin and fifteenMin based on availability and conditions
-    //             const timeFrame =
-    //               statistic.thirtyMin &&
-    //               statistic.thirtyMin.rvol > 150 &&
-    //               statistic.thirtyMin.rsrw > 1
-    //                 ? statistic.thirtyMin
-    //                 : statistic.fifteenMin &&
-    //                   statistic.fifteenMin.rvol > 150 &&
-    //                   statistic.fifteenMin.rsrw > 1
-    //                 ? statistic.fifteenMin
-    //                 : null;
-    //             return timeFrame !== null; // Filter based on the condition being true for either timeframe
-    //           })
-    //           .sort((a, b) => {
-    //             // Determine which timeframe to use for each statistic for sorting
-    //             const aTimeFrame =
-    //               a.thirtyMin && a.thirtyMin.rvol > 150 && a.thirtyMin.rsrw > 1
-    //                 ? a.thirtyMin
-    //                 : a.fifteenMin;
-    //             const bTimeFrame =
-    //               b.thirtyMin && b.thirtyMin.rvol > 150 && b.thirtyMin.rsrw > 1
-    //                 ? b.thirtyMin
-    //                 : b.fifteenMin;
-    //             return bTimeFrame.rsrw - aTimeFrame.rsrw; // Reverse sort order based on rsrw
-    //           })
-    //       )
-    //     )
-    //     .subscribe((filteredData) => {
-    //       this.dataSource.data = filteredData;
-    //     })
-    // );
-
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case "fifteenMinRvol":
-          return item.fifteenMin.rvol;
+          return item.fifteenMin?.rvol;
         case "fifteenMinRsRw":
-          return item.fifteenMin.rsrw;
+          return item.fifteenMin?.rsrw;
         case "thirtyMinRvol":
-          return item.thirtyMin.rvol;
+          return item.thirtyMin?.rvol;
         case "thirtyMinRsRw":
-          return item.thirtyMin.rsrw;
+          return item.thirtyMin?.rsrw;
         case "oneHourRvol":
-          return item.oneHour.rvol;
+          return item.oneHour?.rvol;
         case "oneHourRsRw":
-          return item.oneHour.rsrw;
+          return item.oneHour?.rsrw;
         case "twoHourRvol":
-          return item.twoHour.rvol;
+          return item.twoHour?.rvol;
         case "twoHourRsRw":
-          return item.twoHour.rsrw;
+          return item.twoHour?.rsrw;
         case "fourHourRvol":
           return item.fourHour?.rvol; // Use optional chaining for nullable properties
         case "fourHourRsRw":
