@@ -1,0 +1,17 @@
+{
+    "navigationFallback": {
+      "rewrite": "/index.html",
+      "exclude": ["/images/*", "/styles/*"]
+    },
+    "routes": [
+      {
+        "route": "/*",
+        "serve": "/index.html",
+        "statusCode": 200
+      }
+    ],
+    "globalHeaders": {
+      "cache-control": "no-cache, no-store, must-revalidate"
+    }
+  }
+  

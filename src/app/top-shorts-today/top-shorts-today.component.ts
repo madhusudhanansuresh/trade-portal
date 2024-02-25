@@ -61,55 +61,55 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
       .select(fromRoot.getStockData)
       .pipe(map((data) => data?.listMarketStatistics || []));
 
-    // this.subscription.add(
-    //   this.marketStatistics$
-    //     .pipe(
-    //       map(data => data
-    //         .filter(statistic => statistic.thirtyMin && statistic.thirtyMin?.rvol > 150 && statistic.thirtyMin?.rsrw < -1)
-    //         .sort((a, b) => a.thirtyMin.rsrw - b.thirtyMin.rsrw)
-    //       )
-    //     )
-    //     .subscribe(filteredData => {
-    //       this.dataSource.data = filteredData;
-    //     })
-    // );
     this.subscription.add(
       this.marketStatistics$
         .pipe(
-          map((data) =>
-            data
-              .filter((statistic) => {
-                // Check if thirtyMin exists and meets the conditions; if not, check fifteenMin
-                const timeFrame =
-                  statistic.thirtyMin &&
-                  statistic.thirtyMin.rvol > 150 &&
-                  statistic.thirtyMin.rsrw < -1
-                    ? statistic.thirtyMin
-                    : statistic.fifteenMin &&
-                      statistic.fifteenMin.rvol > 150 &&
-                      statistic.fifteenMin.rsrw < -1
-                    ? statistic.fifteenMin
-                    : null;
-                return timeFrame !== null; // Only include statistics that meet the condition in either time frame
-              })
-              .sort((a, b) => {
-                // Determine which timeframe to use for sorting based on the above logic
-                const aTimeFrame =
-                  a.thirtyMin && a.thirtyMin.rvol > 150 && a.thirtyMin.rsrw < -1
-                    ? a.thirtyMin
-                    : a.fifteenMin;
-                const bTimeFrame =
-                  b.thirtyMin && b.thirtyMin.rvol > 150 && b.thirtyMin.rsrw < -1
-                    ? b.thirtyMin
-                    : b.fifteenMin;
-                return aTimeFrame.rsrw - bTimeFrame.rsrw;
-              })
+          map(data => data
+            .filter(statistic => statistic.thirtyMin && statistic.thirtyMin?.rvol > 150 && statistic.thirtyMin?.rsrw < -1)
+            .sort((a, b) => a.thirtyMin.rsrw - b.thirtyMin.rsrw)
           )
         )
-        .subscribe((filteredData) => {
+        .subscribe(filteredData => {
           this.dataSource.data = filteredData;
         })
     );
+    // this.subscription.add(
+    //   this.marketStatistics$
+    //     .pipe(
+    //       map((data) =>
+    //         data
+    //           .filter((statistic) => {
+    //             // Check if thirtyMin exists and meets the conditions; if not, check fifteenMin
+    //             const timeFrame =
+    //               statistic.thirtyMin &&
+    //               statistic.thirtyMin.rvol > 150 &&
+    //               statistic.thirtyMin.rsrw < -1
+    //                 ? statistic.thirtyMin
+    //                 : statistic.fifteenMin &&
+    //                   statistic.fifteenMin.rvol > 150 &&
+    //                   statistic.fifteenMin.rsrw < -1
+    //                 ? statistic.fifteenMin
+    //                 : null;
+    //             return timeFrame !== null; // Only include statistics that meet the condition in either time frame
+    //           })
+    //           .sort((a, b) => {
+    //             // Determine which timeframe to use for sorting based on the above logic
+    //             const aTimeFrame =
+    //               a.thirtyMin && a.thirtyMin.rvol > 150 && a.thirtyMin.rsrw < -1
+    //                 ? a.thirtyMin
+    //                 : a.fifteenMin;
+    //             const bTimeFrame =
+    //               b.thirtyMin && b.thirtyMin.rvol > 150 && b.thirtyMin.rsrw < -1
+    //                 ? b.thirtyMin
+    //                 : b.fifteenMin;
+    //             return aTimeFrame.rsrw - bTimeFrame.rsrw;
+    //           })
+    //       )
+    //     )
+    //     .subscribe((filteredData) => {
+    //       this.dataSource.data = filteredData;
+    //     })
+    // );
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
