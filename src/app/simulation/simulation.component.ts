@@ -80,7 +80,7 @@ export class SimulationComponent implements OnInit {
     const [hours, minutes] = selectedTime.split(":").map(Number);
     date.setHours(hours, minutes, 0);
 
-    const formattedDateTime = `${date.getFullYear()}-${this.pad(date.getMonth() + 1)}-${this.pad(date.getDate())} ${this.pad(hours)}:${this.pad(minutes)}:00`;
+    const formattedDateTime = `${date.getFullYear()}-${this.pad(date.getMonth() + 1)}-${this.pad(date.getDate())} ${this.pad(hours)}:${this.pad(minutes-5)}:00`;
 
     console.log(formattedDateTime);
 
@@ -124,11 +124,11 @@ export class SimulationComponent implements OnInit {
   }
 
   initializeTimeOptions(): void {
-    const startTime = new Date(0, 0, 0, 9, 45);
-    const endTime = new Date(0, 0, 0, 16, 0);
+    const startTime = new Date(0, 0, 0, 9, 35);
+    const endTime = new Date(0, 0, 0, 16, 5);
     while (startTime < endTime) {
       this.timeOptions.push(startTime.toTimeString().substring(0, 5));
-      startTime.setMinutes(startTime.getMinutes() + 15);
+      startTime.setMinutes(startTime.getMinutes() + 5);
     }
   }
 
