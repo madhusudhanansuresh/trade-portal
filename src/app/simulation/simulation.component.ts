@@ -28,7 +28,7 @@ export class SimulationComponent implements OnInit {
 
   submit() {
     const symbols: string[] = [];
-    const intervals = ["15min"];
+    const intervals = ["5min"];
 
     const startDateString = this.dateRangeForm.value.startDate;
     const endDateString = this.dateRangeForm.value.endDate;
