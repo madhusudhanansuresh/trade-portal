@@ -35,12 +35,14 @@ export class TradeEffects {
         ofType(actions.addOrRemoveWatchlistItem),
         switchMap((action) => this.tradeUserService.addOrRemoveWatchlistItem(action.payload).pipe(
             map(res => {
+                this.messageService.showOkMessage(res.message);
                 return actions.addOrRemoveWatchlistSuccess({ addOrRemoveWatchlist: res })
             }),
             tap(() => {
                 this.store.dispatch(fromRoot.searchWatchlist({ payload: {} }));
             }),
             catchError((error: any) => {
+                this.messageService.showOkMessage('Failed to add or remove');
                 return of(actions.addOrRemoveWatchlistFail({ error }))
             })
         ))
