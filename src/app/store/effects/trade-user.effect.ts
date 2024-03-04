@@ -5,6 +5,7 @@ import * as actions from '../actions';
 import { TradeUserService } from "../../services/trade-user-service";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { Store } from "@ngrx/store";
+import { MessageService } from "../../services/message.service";
 
 
 @Injectable()
@@ -12,6 +13,7 @@ export class TradeEffects {
 
     constructor(
         private action$: Actions,
+        private messageService: MessageService,
         private tradeUserService: TradeUserService,
         private store: Store
     ) {
@@ -60,9 +62,11 @@ export class TradeEffects {
         ofType(actions.importMarketData),
         switchMap((action) => this.tradeUserService.importMarketData(action.payload).pipe(
             map(res => {
+                this.messageService.showOkMessage(res.message);
                 return actions.importMarketDataSuccess({ importMarketData: res })
             }),
             catchError((error: any) => {
+                this.messageService.showOkMessage('Failed to import');
                 return of(actions.importMarketDataFail({ error }))
             })
         ))
