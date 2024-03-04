@@ -1,32 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import 'bootstrap/dist/css/bootstrap.min.css';
-
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
 
 // Assuming you have included your custom theme configuration
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .green-button {
-    background-color: #4CAF50 !important;
-    color: white !important;
-  }
-  
-  .green-button:hover {
-    background-color: #45a049 !important;
-  }
-  
-  .indigo-color {
-    color: #3f51b5 !important/* Dark blue color */
-  }
-  
-  /* Stylesheet for your Angular component */
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.green-button:hover {
+  background-color: #45a049 !important;
+}
+
+.indigo-color {
+  color: #3f51b5 !important; /* Dark blue color */
+}
+
+/* Stylesheet for your Angular component */
 .positive-value {
   color: green;
 }
 
 .negative-value {
   color: red;
+}
+
+.success-snackbar {
+  text-align: center;
+  color: white;
+  --mdc-snackbar-container-color: #3ebd82;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+
+.error-snackbar {
+  text-align: center;
+  color: white;
+  --mdc-snackbar-container-color: #ce6478;
+  border-color: #f5c6cb;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
 }
