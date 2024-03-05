@@ -70,6 +70,50 @@
           <td mat-cell *matCellDef="let statistic">{{ statistic.atr | number:'1.2-2'}}</td>
         </ng-container>
 
+        <!-- FiveMin Rvol Column -->
+        <ng-container matColumnDef="fiveMinRvol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRv</th>
+          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+              'positive-value': statistic.fiveMin.rvol > 100,
+              'negative-value': statistic.fiveMin.rvol < 100
+            }">
+            {{ statistic.fifteenMin.rvol | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- FiveMin RsRw Column -->
+        <ng-container matColumnDef="fiveMinRsRw">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRs</th>
+          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+              'positive-value': statistic.fiveMin.rsrw > 0,
+              'negative-value': statistic.fiveMin.rsrw < 0
+            }">
+            {{ statistic.fiveMin.rsrw | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- TenMin Rvol Column -->
+        <ng-container matColumnDef="fiveMinRvol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRv</th>
+          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+              'positive-value': statistic.fiveMin.rvol > 100,
+              'negative-value': statistic.fiveMin.rvol < 100
+            }">
+            {{ statistic.fiveMin.rvol | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- FiveMin RsRw Column -->
+        <ng-container matColumnDef="tenMinRsRw">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRs</th>
+          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+              'positive-value': statistic.tenMin.rsrw > 0,
+              'negative-value': statistic.tenMin.rsrw < 0
+            }">
+            {{ statistic.tenMin.rsrw | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
         <!-- FifteenMin Rvol Column -->
         <ng-container matColumnDef="fifteenMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRv</th>

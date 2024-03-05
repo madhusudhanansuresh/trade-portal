@@ -11,6 +11,8 @@ export interface MarketStatisticsResponse {
     ticker: string;
     atr: number;
     price: number;
+    fiveMin: TimeframeStatistic;
+    tenMin: TimeframeStatistic;
     fifteenMin: TimeframeStatistic;
     thirtyMin: TimeframeStatistic;
     oneHour: TimeframeStatistic;

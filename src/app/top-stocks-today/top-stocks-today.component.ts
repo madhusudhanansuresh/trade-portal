@@ -24,6 +24,10 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     "ticker",
     "price",
     "atr",
+    "fiveMinRvol",
+    "fiveMinRsRw",
+    "tenMinRvol",
+    "tenMinRsRw",
     "fifteenMinRvol",
     "fifteenMinRsRw",
     "thirtyMinRvol",
@@ -73,6 +77,10 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
+        case "fiveMinRsRw":
+          return item.fiveMin?.rsrw;
+        case "tenMinRvol":
+          return item.fifteenMin?.rvol;
         case "fifteenMinRvol":
           return item.fifteenMin.rvol;
         case "fifteenMinRsRw":
