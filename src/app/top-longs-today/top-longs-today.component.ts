@@ -23,6 +23,10 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     "ticker",
     "price",
     "atr",
+    "fiveMinRvol",
+    "fiveMinRsRw",
+    "tenMinRvol",
+    "tenMinRsRw",
     "fifteenMinRvol",
     "fifteenMinRsRw",
     "thirtyMinRvol",
@@ -64,18 +68,30 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     this.subscription.add(
       this.marketStatistics$
         .pipe(
-          map(data => data
-            .filter(statistic => statistic.thirtyMin && statistic.thirtyMin.rvol > 150 && statistic.thirtyMin?.rsrw > 0.5)
-            .sort((a, b) => b.thirtyMin.rvol - a.thirtyMin.rvol)
+          map((data) =>
+            data
+              .filter(
+                (statistic) =>
+                  statistic.thirtyMin &&
+                  statistic.thirtyMin.rvol > 150 &&
+                  statistic.thirtyMin?.rsrw > 0.5
+              )
+              .sort((a, b) => b.thirtyMin.rvol - a.thirtyMin.rvol)
           )
         )
-        .subscribe(filteredData => {
+        .subscribe((filteredData) => {
           this.dataSource.data = filteredData;
         })
     );
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
+        case "fiveMinRvol":
+          return item.fiveMin?.rvol;
+        case "fiveMinRsRw":
+          return item.fiveMin?.rsrw;
+        case "tenMinRvol":
+          return item.fifteenMin?.rvol;
         case "fifteenMinRvol":
           return item.fifteenMin?.rvol;
         case "fifteenMinRsRw":
