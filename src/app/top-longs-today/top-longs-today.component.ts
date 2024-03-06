@@ -91,9 +91,9 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
         case "fiveMinRsRw":
           return item.fiveMin?.rsrw;
         case "tenMinRvol":
-          return item.fifteenMin?.rvol;
+          return item.tenMin?.rvol;
         case "fifteenMinRvol":
-          return item.fifteenMin?.rvol;
+          return item.tenMin?.rsrw;
         case "fifteenMinRsRw":
           return item.fifteenMin?.rsrw;
         case "thirtyMinRvol":

@@ -38,7 +38,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     "twoHourRsRw",
     "fourHourRvol",
     "fourHourRsRw",
-    "action"
+    "action",
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -77,10 +77,14 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
+        case "fiveMinRvol":
+          return item.fiveMin?.rvol;
         case "fiveMinRsRw":
           return item.fiveMin?.rsrw;
         case "tenMinRvol":
-          return item.fifteenMin?.rvol;
+          return item.tenMin?.rvol;
+        case "tenMinRsRw":
+          return item.tenMin?.rsrw;
         case "fifteenMinRvol":
           return item.fifteenMin.rvol;
         case "fifteenMinRsRw":
@@ -224,26 +228,25 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   applyFilters() {
     this.dataSource.filter = Math.random().toString();
   }
-  
 
   openDialog(ticker: string): void {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
-      width: '400px',
-      height: '220px'
+      width: "400px",
+      height: "220px",
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) { // Ensure result is not empty
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Ensure result is not empty
         const payload = {
           tickerName: ticker,
           reason: result,
-          action: 'add'
+          action: "add",
         };
         this.store.dispatch(fromRoot.addOrRemoveWatchlistItem({ payload }));
       }
     });
   }
-  
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

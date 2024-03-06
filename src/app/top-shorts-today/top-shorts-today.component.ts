@@ -80,6 +80,14 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
+        case "fiveMinRvol":
+          return item.fiveMin?.rvol;
+        case "fiveMinRsRw":
+          return item.fiveMin?.rsrw;
+        case "tenMinRvol":
+          return item.tenMin?.rvol;
+        case "tenMinRsRw":
+          return item.tenMin?.rsrw;
         case "fifteenMinRvol":
           return item.fifteenMin.rvol;
         case "fifteenMinRsRw":
