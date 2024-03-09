@@ -232,12 +232,12 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   openDialog(ticker: string): void {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
       width: "400px",
-      height: "220px",
+      height: "250px",
+      autoFocus: false, 
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Ensure result is not empty
         const payload = {
           tickerName: ticker,
           reason: result,

@@ -115,7 +115,7 @@
     
         <!-- FourHour RsRw Column (nullable) -->
         <ng-container matColumnDef="fourHourRsRw">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>4hRs</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="reason-column">4hRs</th>
           <td mat-cell *matCellDef="let statistic" [ngClass]="{
               'positive-value': statistic.fourHour?.rsrw > 0,
               'negative-value': statistic.fourHour.rsrw < 0

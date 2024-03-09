@@ -33,6 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MyWatchlistComponent } from './my-watchlist/my-watchlist.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SimulationComponent } from './simulation/simulation.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RealtimeComponent } from './realtime/realtime.component';
@@ -60,6 +61,7 @@ import { RealtimeComponent } from './realtime/realtime.component';
     MatSortModule,
     MatFormFieldModule,
     MatTooltipModule,
+    MatCheckboxModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,

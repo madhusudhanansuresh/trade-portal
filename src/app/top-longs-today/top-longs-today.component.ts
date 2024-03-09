@@ -121,7 +121,8 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
   openDialog(ticker: string): void {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
       width: "400px",
-      height: "220px",
+      height: "250px",
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {
