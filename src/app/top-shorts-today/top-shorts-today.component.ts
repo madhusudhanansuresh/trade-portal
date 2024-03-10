@@ -152,6 +152,15 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getRvolDisplayValue(rvol: number | null | undefined): { display: string, isValid: boolean } {
+    if (rvol === null || rvol === undefined) {
+      return { display: 'NA', isValid: false };
+    } else {
+      return { display: rvol.toFixed(2), isValid: true }; // Adjust decimal places as needed
+    }
+  }
+  
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

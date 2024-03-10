@@ -123,11 +123,18 @@
         <!-- FifteenMin Rvol Column -->
         <ng-container matColumnDef="fifteenMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
-              'positive-value': statistic.fifteenMin.rvol > 100,
-              'negative-value': statistic.fifteenMin.rvol < 100
-            }">
-            {{ statistic.fifteenMin.rvol | number : "1.2-2" }}
+          <td mat-cell *matCellDef="let statistic">
+            <!-- Apply ngClass conditionally based on rvol value validity -->
+            <span [ngClass]="{
+                'positive-value':
+                  getRvolDisplayValue(statistic.fifteenMin?.rvol).isValid &&
+                  statistic.fifteenMin?.rvol > 100,
+                'negative-value':
+                  getRvolDisplayValue(statistic.fifteenMin?.rvol).isValid &&
+                  statistic.fifteenMin?.rvol < 100
+              }">
+              {{ getRvolDisplayValue(statistic.fifteenMin?.rvol).display }}
+            </span>
           </td>
         </ng-container>
 
@@ -189,11 +196,17 @@
         <!-- ThirtyMin Rvol Column -->
         <ng-container matColumnDef="thirtyMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>30mRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
-              'positive-value': statistic.thirtyMin.rvol > 100,
-              'negative-value': statistic.thirtyMin.rvol < 100
-            }">
-            {{ statistic.thirtyMin.rvol | number : "1.2-2" }}
+          <td mat-cell *matCellDef="let statistic">
+            <span [ngClass]="{
+                'positive-value':
+                  getRvolDisplayValue(statistic.thirtyMin?.rvol).isValid &&
+                  statistic.thirtyMin?.rvol > 100,
+                'negative-value':
+                  getRvolDisplayValue(statistic.thirtyMin?.rvol).isValid &&
+                  statistic.thirtyMin?.rvol < 100
+              }">
+              {{ getRvolDisplayValue(statistic.thirtyMin?.rvol).display }}
+            </span>
           </td>
         </ng-container>
 
@@ -211,11 +224,17 @@
         <!-- OneHour Rvol Column -->
         <ng-container matColumnDef="oneHourRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>1hRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
-              'positive-value': statistic.oneHour.rvol > 100,
-              'negative-value': statistic.oneHour.rvol < 100
-            }">
-            {{ statistic.oneHour.rvol | number : "1.2-2" }}
+          <td mat-cell *matCellDef="let statistic">
+            <span [ngClass]="{
+                'positive-value':
+                  getRvolDisplayValue(statistic.oneHour?.rvol).isValid &&
+                  statistic.oneHour?.rvol > 100,
+                'negative-value':
+                  getRvolDisplayValue(statistic.oneHour?.rvol).isValid &&
+                  statistic.oneHour?.rvol < 100
+              }">
+              {{ getRvolDisplayValue(statistic.oneHour?.rvol).display }}
+            </span>
           </td>
         </ng-container>
 
@@ -233,11 +252,17 @@
         <!-- TwoHour Rvol Column -->
         <ng-container matColumnDef="twoHourRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>2hRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
-              'positive-value': statistic.twoHour.rvol > 100,
-              'negative-value': statistic.twoHour.rvol < 100
-            }">
-            {{ statistic.twoHour.rvol | number : "1.2-2" }}
+          <td mat-cell *matCellDef="let statistic">
+            <span [ngClass]="{
+                'positive-value':
+                  getRvolDisplayValue(statistic.twoHour?.rvol).isValid &&
+                  statistic.twoHour?.rvol > 100,
+                'negative-value':
+                  getRvolDisplayValue(statistic.twoHour?.rvol).isValid &&
+                  statistic.twoHour?.rvol < 100
+              }">
+              {{ getRvolDisplayValue(statistic.twoHour?.rvol).display }}
+            </span>
           </td>
         </ng-container>
 
@@ -255,11 +280,17 @@
         <!-- FourHour Rvol Column (nullable) -->
         <ng-container matColumnDef="fourHourRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>4hRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
-              'positive-value': statistic.fourHour.rvol > 100,
-              'negative-value': statistic.fourHour.rvol < 100
-            }">
-            {{ statistic.fourHour?.rvol | number : "1.2-2" }}
+          <td mat-cell *matCellDef="let statistic">
+            <span [ngClass]="{
+                'positive-value':
+                  getRvolDisplayValue(statistic.fourHour?.rvol).isValid &&
+                  statistic.fourHour?.rvol > 100,
+                'negative-value':
+                  getRvolDisplayValue(statistic.fourHour?.rvol).isValid &&
+                  statistic.fourHour?.rvol < 100
+              }">
+              {{ getRvolDisplayValue(statistic.fourHour?.rvol).display }}
+            </span>
           </td>
         </ng-container>
 

@@ -90,7 +90,7 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
         case "tenMinRsRw":
           return item.tenMin?.rsrw;
         case "fifteenMinRvol":
-          return item.fifteenMin.rvol;
+          return item.fifteenMin?.rvol;
         case "fifteenMinRsRw":
           return item.fifteenMin.rsrw;
         case "twentyMinRvol":
@@ -259,6 +259,15 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  getRvolDisplayValue(rvol: number | null | undefined): { display: string, isValid: boolean } {
+    if (rvol === null || rvol === undefined) {
+      return { display: 'NA', isValid: false };
+    } else {
+      return { display: rvol.toFixed(2), isValid: true }; // Adjust decimal places as needed
+    }
+  }
+  
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
