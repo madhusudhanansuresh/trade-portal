@@ -52,8 +52,10 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
   filterStates = {
     ticker: "",
     price: "",
-    rv: "",
-    rs: "",
+    m15rv: "",
+    m15rs: "",
+    m30rv: "",
+    m30rs: ""
   };
 
   constructor(private store: Store<any>, public dialog: MatDialog) {
@@ -142,8 +144,8 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
       }
 
       // Check rv filter
-      if (this.filterStates.rv) {
-        const [, value] = this.filterStates.rv.split(":");
+      if (this.filterStates.m30rv) {
+        const [, value] = this.filterStates.m30rv.split(":");
         const rvValue = parseFloat(value);
         if (!(data.thirtyMin.rvol > rvValue)) {
           return false;
@@ -151,8 +153,8 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
       }
 
       // Check rs filter
-      if (this.filterStates.rs) {
-        const [, condition] = this.filterStates.rs.split(":");
+      if (this.filterStates.m30rs) {
+        const [, condition] = this.filterStates.m30rs.split(":");
         const operator = condition[0];
         const rsValue = parseFloat(condition.substring(1));
 
@@ -162,6 +164,31 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
         }
         // Apply less than filter
         else if (operator === "<" && !(data.thirtyMin.rsrw < rsValue)) {
+          return false;
+        }
+      }
+
+      // Check rv filter
+      if (this.filterStates.m15rv) {
+        const [, value] = this.filterStates.m15rv.split(":");
+        const rvValue = parseFloat(value);
+        if (!(data.fifteenMin.rvol > rvValue)) {
+          return false;
+        }
+      }
+
+      // Check rs filter
+      if (this.filterStates.m15rs) {
+        const [, condition] = this.filterStates.m15rs.split(":");
+        const operator = condition[0];
+        const rsValue = parseFloat(condition.substring(1));
+
+        // Apply greater than filter
+        if (operator === ">" && !(data.fifteenMin.rsrw > rsValue)) {
+          return false;
+        }
+        // Apply less than filter
+        else if (operator === "<" && !(data.fifteenMin.rsrw < rsValue)) {
           return false;
         }
       }
@@ -219,20 +246,40 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   apply30mRvFilter(filterValue: string) {
     if (filterValue === "") {
-      this.filterStates.rv = "";
+      this.filterStates.m30rv = "";
     } else {
       let value = filterValue.substring(1);
-      this.filterStates.rv = "rv:" + value;
+      this.filterStates.m30rv = "rv:" + value;
     }
     this.applyFilters();
   }
 
   apply30mRsFilter(filterValue: string) {
     if (filterValue === "") {
-      this.filterStates.rs = "";
+      this.filterStates.m30rs = "";
     } else {
-      this.filterStates.rs = filterValue ? "rs:" + filterValue : "";
-      console.log(this.filterStates.rs);
+      this.filterStates.m30rs = filterValue ? "rs:" + filterValue : "";
+      console.log(this.filterStates.m30rs);
+    }
+    this.applyFilters();
+  }
+
+  apply15mRvFilter(filterValue: string) {
+    if (filterValue === "") {
+      this.filterStates.m15rv = "";
+    } else {
+      let value = filterValue.substring(1);
+      this.filterStates.m15rv = "rv:" + value;
+    }
+    this.applyFilters();
+  }
+
+  apply15mRsFilter(filterValue: string) {
+    if (filterValue === "") {
+      this.filterStates.m15rs = "";
+    } else {
+      this.filterStates.m15rs = filterValue ? "rs:" + filterValue : "";
+      console.log(this.filterStates.m15rs);
     }
     this.applyFilters();
   }
@@ -260,14 +307,16 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getRvolDisplayValue(rvol: number | null | undefined): { display: string, isValid: boolean } {
+  getRvolDisplayValue(rvol: number | null | undefined): {
+    display: string;
+    isValid: boolean;
+  } {
     if (rvol === null || rvol === undefined) {
-      return { display: 'NA', isValid: false };
+      return { display: "NA", isValid: false };
     } else {
       return { display: rvol.toFixed(2), isValid: true }; // Adjust decimal places as needed
     }
   }
-  
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

@@ -20,7 +20,33 @@
       </mat-form-field>
     </div>
 
-    <!-- 30mRv Field -->
+    <!-- 15mRv Field -->
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>15mRv</mat-label>
+        <mat-select (selectionChange)="apply15mRvFilter($event.value)" disableOptionCentering>
+          <mat-option *ngFor="let rvFilter of rvFilters" [value]="rvFilter.value">
+            {{ rvFilter.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- 15mRsrw Field -->
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>15mRsrw</mat-label>
+        <mat-select (selectionChange)="apply15mRsFilter($event.value)" disableOptionCentering>
+          <mat-option *ngFor="let rsFilter of rsFilters" [value]="rsFilter.value">
+            {{ rsFilter.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- 30mRv Field -->
+  <div class="row">
     <div class="col-md-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>30mRv</mat-label>
@@ -45,6 +71,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="container mt-4">
   <mat-card class="mt-4">
