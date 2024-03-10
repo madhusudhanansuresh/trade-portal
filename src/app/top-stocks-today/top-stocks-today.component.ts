@@ -186,12 +186,12 @@ export class TopStocksTodayComponent implements OnInit, AfterViewInit {
 
   rsFilters = [
     { value: "", viewValue: "" },
+    { value: ">0.50", viewValue: ">0.50" },
     { value: ">1.00", viewValue: ">1.00" },
     { value: ">2.00", viewValue: ">2.00" },
-    { value: ">3.00", viewValue: ">3.00" },
+    { value: "<-0.50", viewValue: "<(0.50)" },
     { value: "<-1.00", viewValue: "<(1.00)" },
     { value: "<-2.00", viewValue: "<(2.00)" },
-    { value: "<-3.00", viewValue: "<(3.00)" },
   ];
 
   applyFilter(event: Event) {
