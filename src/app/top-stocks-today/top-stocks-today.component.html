@@ -12,8 +12,14 @@
     <div class="col-md-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Price</mat-label>
-        <mat-select (selectionChange)="applyPriceFilter($event.value)" disableOptionCentering>
-          <mat-option *ngFor="let priceFilter of priceFilters" [value]="priceFilter.value">
+        <mat-select
+          (selectionChange)="applyPriceFilter($event.value)"
+          disableOptionCentering
+        >
+          <mat-option
+            *ngFor="let priceFilter of priceFilters"
+            [value]="priceFilter.value"
+          >
             {{ priceFilter.viewValue }}
           </mat-option>
         </mat-select>
@@ -24,8 +30,14 @@
     <div class="col-md-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>30mRv</mat-label>
-        <mat-select (selectionChange)="apply30mRvFilter($event.value)" disableOptionCentering>
-          <mat-option *ngFor="let rvFilter of rvFilters" [value]="rvFilter.value">
+        <mat-select
+          (selectionChange)="apply30mRvFilter($event.value)"
+          disableOptionCentering
+        >
+          <mat-option
+            *ngFor="let rvFilter of rvFilters"
+            [value]="rvFilter.value"
+          >
             {{ rvFilter.viewValue }}
           </mat-option>
         </mat-select>
@@ -36,8 +48,14 @@
     <div class="col-md-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>30mRsrw</mat-label>
-        <mat-select (selectionChange)="apply30mRsFilter($event.value)" disableOptionCentering>
-          <mat-option *ngFor="let rsFilter of rsFilters" [value]="rsFilter.value">
+        <mat-select
+          (selectionChange)="apply30mRsFilter($event.value)"
+          disableOptionCentering
+        >
+          <mat-option
+            *ngFor="let rsFilter of rsFilters"
+            [value]="rsFilter.value"
+          >
             {{ rsFilter.viewValue }}
           </mat-option>
         </mat-select>
@@ -49,34 +67,55 @@
 <div class="container mt-4">
   <mat-card class="mt-4">
     <div class="table-responsive">
-      <table class="wide-table" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table
+        class="wide-table"
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
         <!-- Ticker Column -->
         <ng-container matColumnDef="ticker" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticker</th>
-          <td mat-cell *matCellDef="let statistic" class="indigo-color">{{ statistic.ticker }}</td>
+          <td mat-cell *matCellDef="let statistic" class="indigo-color">
+            {{ statistic.ticker }}
+          </td>
         </ng-container>
 
         <!-- Price Column -->
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-          <td mat-cell *matCellDef="let statistic">{{ statistic.price | number:'1.2-2' }}</td>
+          <td mat-cell *matCellDef="let statistic">
+            {{ statistic.price | number : "1.2-2" }}
+          </td>
         </ng-container>
 
         <!-- ATR Column -->
         <ng-container matColumnDef="atr">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="grey-header">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="grey-header"
+          >
             ATR
           </th>
-          <td mat-cell *matCellDef="let statistic">{{ statistic.atr | number:'1.2-2'}}</td>
+          <td mat-cell *matCellDef="let statistic">
+            {{ statistic.atr | number : "1.2-2" }}
+          </td>
         </ng-container>
 
         <!-- FiveMin Rvol Column -->
         <ng-container matColumnDef="fiveMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>5mRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.fiveMin?.rvol > 100,
               'negative-value': statistic.fiveMin?.rvol < 100
-            }">
+            }"
+          >
             {{ statistic.fiveMin?.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
@@ -84,10 +123,14 @@
         <!-- FiveMin RsRw Column -->
         <ng-container matColumnDef="fiveMinRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>5mRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.fiveMin?.rsrw > 0,
               'negative-value': statistic.fiveMin?.rsrw < 0
-            }">
+            }"
+          >
             {{ statistic.fiveMin?.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
@@ -95,10 +138,14 @@
         <!-- TenMin Rvol Column -->
         <ng-container matColumnDef="tenMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>10mRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.tenMin?.rvol > 100,
               'negative-value': statistic.tenMin?.rvol < 100
-            }">
+            }"
+          >
             {{ statistic.tenMin?.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
@@ -106,10 +153,14 @@
         <!-- TenMin RsRw Column -->
         <ng-container matColumnDef="tenMinRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>10mRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.tenMin?.rsrw > 0,
               'negative-value': statistic.tenMin?.rsrw < 0
-            }">
+            }"
+          >
             {{ statistic.tenMin?.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
@@ -117,110 +168,210 @@
         <!-- FifteenMin Rvol Column -->
         <ng-container matColumnDef="fifteenMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.fifteenMin.rvol > 100,
               'negative-value': statistic.fifteenMin.rvol < 100
-            }">
-            {{ statistic.fifteenMin.rvol | number:'1.2-2' }}
+            }"
+          >
+            {{ statistic.fifteenMin.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- FifteenMin RsRw Column -->
         <ng-container matColumnDef="fifteenMinRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>15mRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.fifteenMin.rsrw > 0,
               'negative-value': statistic.fifteenMin.rsrw < 0
-            }">
-            {{ statistic.fifteenMin.rsrw | number:'1.2-2' }}
+            }"
+          >
+            {{ statistic.fifteenMin.rsrw | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- TwentyMin Rvol Column -->
+        <ng-container matColumnDef="twentyMinRvol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>20mRv</th>
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
+              'positive-value': statistic.twentyMin?.rvol > 100,
+              'negative-value': statistic.twentyMin?.rvol < 100
+            }"
+          >
+            {{ statistic.twentyMin?.rvol | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- TwentyMin RsRw Column -->
+        <ng-container matColumnDef="twentyMinRsRw">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>20mRs</th>
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
+              'positive-value': statistic.twentyMin?.rsrw > 0,
+              'negative-value': statistic.twentyMin?.rsrw < 0
+            }"
+          >
+            {{ statistic.twentyMin?.rsrw | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- TwentyFiveMin Rvol Column -->
+        <ng-container matColumnDef="twentyFiveMinRvol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>25mRv</th>
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
+              'positive-value': statistic.twentyFiveMin?.rvol > 100,
+              'negative-value': statistic.twentyFiveMin?.rvol < 100
+            }"
+          >
+            {{ statistic.twentyFiveMin?.rvol | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- TwentyFiveMin RsRw Column -->
+        <ng-container matColumnDef="twentyFiveMinRsRw">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>25mRs</th>
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
+              'positive-value': statistic.twentyFiveMin?.rsrw > 0,
+              'negative-value': statistic.twentyFiveMin?.rsrw < 0
+            }"
+          >
+            {{ statistic.twentyFiveMin?.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- ThirtyMin Rvol Column -->
         <ng-container matColumnDef="thirtyMinRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>30mRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.thirtyMin.rvol > 100,
               'negative-value': statistic.thirtyMin.rvol < 100
-            }">
-            {{ statistic.thirtyMin.rvol | number:'1.2-2' }}
+            }"
+          >
+            {{ statistic.thirtyMin.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- ThirtyMin RsRw Column -->
         <ng-container matColumnDef="thirtyMinRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>30mRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.thirtyMin.rsrw > 0,
               'negative-value': statistic.thirtyMin.rsrw < 0
-            }">
-            {{ statistic.thirtyMin.rsrw | number:'1.2-2'}}
+            }"
+          >
+            {{ statistic.thirtyMin.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- OneHour Rvol Column -->
         <ng-container matColumnDef="oneHourRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>1hRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.oneHour.rvol > 100,
               'negative-value': statistic.oneHour.rvol < 100
-            }">
-            {{ statistic.oneHour.rvol | number:'1.2-2' }}
+            }"
+          >
+            {{ statistic.oneHour.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- OneHour RsRw Column -->
         <ng-container matColumnDef="oneHourRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>1hRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.oneHour.rsrw > 0,
               'negative-value': statistic.oneHour.rsrw < 0
-            }">
-            {{ statistic.oneHour.rsrw | number:'1.2-2'}}
+            }"
+          >
+            {{ statistic.oneHour.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- TwoHour Rvol Column -->
         <ng-container matColumnDef="twoHourRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>2hRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.twoHour.rvol > 100,
               'negative-value': statistic.twoHour.rvol < 100
-            }">
-            {{ statistic.twoHour.rvol | number:'1.2-2' }}
+            }"
+          >
+            {{ statistic.twoHour.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- TwoHour RsRw Column -->
         <ng-container matColumnDef="twoHourRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>2hRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.twoHour?.rsrw > 0,
               'negative-value': statistic.twoHour.rsrw < 0
-            }">
-            {{ statistic.twoHour.rsrw | number:'1.2-2'}}
+            }"
+          >
+            {{ statistic.twoHour.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- FourHour Rvol Column (nullable) -->
         <ng-container matColumnDef="fourHourRvol">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>4hRv</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.fourHour.rvol > 100,
               'negative-value': statistic.fourHour.rvol < 100
-            }">
-            {{ statistic.fourHour?.rvol | number:'1.2-2' }}
+            }"
+          >
+            {{ statistic.fourHour?.rvol | number : "1.2-2" }}
           </td>
         </ng-container>
 
         <!-- FourHour RsRw Column (nullable) -->
         <ng-container matColumnDef="fourHourRsRw">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>4hRs</th>
-          <td mat-cell *matCellDef="let statistic" [ngClass]="{
+          <td
+            mat-cell
+            *matCellDef="let statistic"
+            [ngClass]="{
               'positive-value': statistic.fourHour?.rsrw > 0,
               'negative-value': statistic.fourHour.rsrw < 0
-            }">
-            {{ statistic.fourHour?.rsrw | number:'1.2-2'}}
+            }"
+          >
+            {{ statistic.fourHour?.rsrw | number : "1.2-2" }}
           </td>
         </ng-container>
 
@@ -228,19 +379,30 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let statistic">
-            <button mat-mini-fab class="green-button" (click)= "openDialog(statistic.ticker)" aria-label="Add to watchlist" matTooltip="Add to watchlist">
+            <button
+              mat-mini-fab
+              class="green-button"
+              (click)="openDialog(statistic.ticker)"
+              aria-label="Add to watchlist"
+              matTooltip="Add to watchlist"
+            >
               <mat-icon>add</mat-icon>
             </button>
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
     <mat-card-footer>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100, 200, 500]"
-        aria-label="Select page of users"></mat-paginator>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 50, 100, 200, 500]"
+        aria-label="Select page of users"
+      ></mat-paginator>
       <span class="ms-2">Last updated:{{ firstTimestamp }}</span>
     </mat-card-footer>
   </mat-card>

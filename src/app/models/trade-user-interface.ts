@@ -14,6 +14,8 @@ export interface MarketStatisticsResponse {
     fiveMin: TimeframeStatistic;
     tenMin: TimeframeStatistic;
     fifteenMin: TimeframeStatistic;
+    twentyMin: TimeframeStatistic;
+    twentyFiveMin: TimeframeStatistic;
     thirtyMin: TimeframeStatistic;
     oneHour: TimeframeStatistic;
     twoHour: TimeframeStatistic;

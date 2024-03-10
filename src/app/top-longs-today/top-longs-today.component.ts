@@ -27,6 +27,10 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     // "fiveMinRsRw",
     // "tenMinRvol",
     // "tenMinRsRw",
+    "twentyMinRvol",
+    "twentyMinRsRw",
+    "twentyFiveMinRvol",
+    "twintyFiveMinRsRw",
     "fifteenMinRvol",
     "fifteenMinRsRw",
     "thirtyMinRvol",
@@ -96,6 +100,14 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
           return item.tenMin?.rsrw;
         case "fifteenMinRsRw":
           return item.fifteenMin?.rsrw;
+        case "twentyMinRvol":
+          return item.twentyMin?.rvol;
+        case "twentyMinRsRw":
+          return item.twentyMin?.rsrw;
+        case "twentyFiveMinRvol":
+          return item.twentyFiveMin?.rvol;
+        case "twentyFiveMinRsRw":
+          return item.twentyFiveMin?.rsrw;
         case "thirtyMinRvol":
           return item.thirtyMin?.rvol;
         case "thirtyMinRsRw":
@@ -122,7 +134,7 @@ export class TopLongsTodayComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
       width: "400px",
       height: "250px",
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -27,6 +27,10 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
     // "fiveMinRsRw",
     // "tenMinRvol",
     // "tenMinRsRw",
+    "twentyMinRvol",
+    "twentyMinRsRw",
+    "twentyFiveMinRvol",
+    "twintyFiveMinRsRw",
     "fifteenMinRvol",
     "fifteenMinRsRw",
     "thirtyMinRvol",
@@ -68,12 +72,18 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
     this.subscription.add(
       this.marketStatistics$
         .pipe(
-          map(data => data
-            .filter(statistic => statistic.thirtyMin && statistic.thirtyMin?.rvol > 150 && statistic.thirtyMin?.rsrw < -0.5)
-            .sort((a, b) => b.thirtyMin.rvol - a.thirtyMin.rvol)
+          map((data) =>
+            data
+              .filter(
+                (statistic) =>
+                  statistic.thirtyMin &&
+                  statistic.thirtyMin?.rvol > 150 &&
+                  statistic.thirtyMin?.rsrw < -0.5
+              )
+              .sort((a, b) => b.thirtyMin.rvol - a.thirtyMin.rvol)
           )
         )
-        .subscribe(filteredData => {
+        .subscribe((filteredData) => {
           this.dataSource.data = filteredData;
         })
     );
@@ -92,6 +102,14 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
           return item.fifteenMin.rvol;
         case "fifteenMinRsRw":
           return item.fifteenMin.rsrw;
+        case "twentyMinRvol":
+          return item.twentyMin?.rvol;
+        case "twentyMinRsRw":
+          return item.twentyMin?.rsrw;
+        case "twentyFiveMinRvol":
+          return item.twentyFiveMin?.rvol;
+        case "twentyFiveMinRsRw":
+          return item.twentyFiveMin?.rsrw;
         case "thirtyMinRvol":
           return item.thirtyMin.rvol;
         case "thirtyMinRsRw":
@@ -118,7 +136,7 @@ export class TopShortsTodayComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(ReasonDialogComponent, {
       width: "400px",
       height: "250px",
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
