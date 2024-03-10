@@ -69,26 +69,38 @@ export class SimulationComponent implements OnInit {
   submitDateTime() {
     const selectedDate = this.dateTimeForm.value.selectedDate;
     const selectedTime = this.dateTimeForm.value.selectedTime;
-
+  
     if (!selectedDate || !selectedTime) {
       console.error("Date or time not selected");
       return;
     }
-
+  
     const date = new Date(selectedDate);
-
-    const [hours, minutes] = selectedTime.split(":").map(Number);
+  
+    let [hours, minutes] = selectedTime.split(":").map(Number);
+    
+    // Subtract 5 minutes correctly, accounting for changes to hours if needed
+    minutes -= 5;
+    if (minutes < 0) {
+      minutes += 60; // If minutes go below 0, roll back to 55 and adjust hour
+      hours -= 1; // Decrement hour if minutes fall below 0
+      if (hours < 0) {
+        hours += 24; // Adjust for negative hours, rolling back to the previous day
+      }
+    }
+  
     date.setHours(hours, minutes, 0);
-
-    const formattedDateTime = `${date.getFullYear()}-${this.pad(date.getMonth() + 1)}-${this.pad(date.getDate())} ${this.pad(hours)}:${this.pad(minutes-5)}:00`;
-
+  
+    const formattedDateTime = `${date.getFullYear()}-${this.pad(date.getMonth() + 1)}-${this.pad(date.getDate())} ${this.pad(hours)}:${this.pad(minutes)}:00`;
+  
     console.log(formattedDateTime);
-
+  
     const payload = {
       endDateTime: formattedDateTime,
     };
     this.store.dispatch(fromRoot.searchStockData({ payload }));
   }
+  
 
   adjustDateToEST(date: Date, isStartDate: boolean): string {
     let adjustedDate = new Date(date.getTime());
